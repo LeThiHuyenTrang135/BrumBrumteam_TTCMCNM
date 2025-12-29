@@ -22,4 +22,14 @@ class UserService extends BaseService implements UserServiceInterface
     {
         return $this->repository->create($data);
     }
+
+    public function update($user, array $data)
+    {
+        return $this->repository->update($user, $data);
+    }
+
+    public function delete($user)
+    {
+        return $this->repository->delete($user);
+    }
 }

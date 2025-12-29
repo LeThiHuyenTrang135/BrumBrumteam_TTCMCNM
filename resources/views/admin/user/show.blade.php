@@ -35,7 +35,9 @@
         </li>
 
         <li class="nav-item delete">
-            <form action="" method="post">
+            <form action="/admin/user/{{ $user->id }}" method="post">
+                @csrf
+                @method('DELETE')
                 <button class="nav-link btn" type="submit"
                     onclick="return confirm('Do you really want to delete this item?')">
                     <span class="btn-icon-wrapper pr-2 opacity-8">

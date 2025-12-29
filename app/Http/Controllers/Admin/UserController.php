@@ -43,7 +43,7 @@ class UserController extends Controller
         $data['password'] = bcrypt($request->get('password'));
 
 
-        //Xu ly file:
+        //Xu ly file anh:
         if($request->hasFile('image')){
             $data['avatar'] = Common::uploadFile($request->file('image'), 'front/img/user');
         }
@@ -51,5 +51,39 @@ class UserController extends Controller
         $user = $this->userService->create($data);
 
         return redirect('admin/user/' . $user->id);
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->all();
+
+        if ($request->filled('password')) {
+            if ($request->get('password') != $request->get('password_confirmation')){
+                return back()->with('notification', 'ERROR: Confirmation password does not match');
+            }
+            $data['password'] = bcrypt($request->get('password'));
+        } else {
+            unset($data['password']);
+        }
+
+        // Xử lý upload ảnh
+        if($request->hasFile('image')){
+            $data['avatar'] = Common::uploadFile($request->file('image'), 'front/img/user');
+        }
+
+        $user->update($data);
+
+        return redirect('admin/user/' . $user->id);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect('admin/user');
     }
 }
