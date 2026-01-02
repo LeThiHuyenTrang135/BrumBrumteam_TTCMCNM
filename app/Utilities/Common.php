@@ -3,6 +3,8 @@
 namespace App\Utilities;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Common
 {

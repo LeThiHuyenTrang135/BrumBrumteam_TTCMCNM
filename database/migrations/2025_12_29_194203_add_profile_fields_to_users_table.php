@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::table('users', function (Blueprint $table) {
-        $table->string('company_name')->nullable();
-        $table->string('country')->nullable();
-        $table->string('street_address')->nullable();
-        $table->string('postcode_zip')->nullable();
-        $table->string('town_city')->nullable();
-        $table->string('phone')->nullable();
-        $table->tinyInteger('level')->default(0);
-        $table->text('description')->nullable();
-        $table->string('avatar')->nullable();
-    });
+        // Schema::table('users', function (Blueprint $table) {
+        // $table->string('company_name')->nullable();
+        // $table->string('country')->nullable();
+        // $table->string('street_address')->nullable();
+        // $table->string('postcode_zip')->nullable();
+        // $table->string('town_city')->nullable();
+        // $table->string('phone')->nullable();
+        // $table->tinyInteger('level')->default(0);
+        // $table->text('description')->nullable();
+        // $table->string('avatar')->nullable();
+    // });
     }
 
     /**
@@ -29,11 +29,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn([
-            'company_name','country','street_address','postcode_zip',
-            'town_city','phone','level','description','avatar'
-        ]);
-    });
+        // Schema::table('users', function (Blueprint $table) {
+        // $table->dropColumn([
+        //     'company_name','country','street_address','postcode_zip',
+        //     'town_city','phone','level','description','avatar'
+        // ]);
+    // });
     }
 };

@@ -1159,8 +1159,10 @@
 
         <div class="app-main">
             <div class="app-sidebar sidebar-shadow">
-                <div class="app-header__logo">
-                    <div class="logo-src"></div>
+                <div class="app-header__logo" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem 1rem;">
+                    <div style="font-size: 24px; font-weight: 800; color: white; letter-spacing: 2px;">
+                        <i class="fa fa-cube" style="margin-right: 8px;"></i>BrumBrum
+                    </div>
                     <div class="header__pane ml-auto">
                         <div>
                             <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
@@ -1194,42 +1196,77 @@
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Menu</li>
+                            <li class="app-sidebar__heading" style="color: #667eea; font-weight: 700; padding: 1.5rem 1rem 1rem;">
+                                <i class="fa fa-bars" style="margin-right: 8px;"></i>Quản lý
+                            </li>
 
-                            <li class="mm-active">
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-plugin"></i>Danh mục quản lý
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                            <li>
+                                <a href="./admin/user" style="display: flex; align-items: center; padding: 0.75rem 1rem; transition: all 0.3s ease; border-left: 3px solid transparent;" class="nav-item-link {{ request()->is('admin/user*') ? 'active-nav' : '' }}">
+                                    <i class="fa fa-users" style="margin-right: 12px; min-width: 20px; font-size: 16px;"></i>
+                                    <span style="flex: 1;">Người dùng</span>
+                                    @if(request()->is('admin/user*'))
+                                        <i class="fa fa-check" style="margin-left: 8px; color: #667eea;"></i>
+                                    @endif
                                 </a>
-                                <ul>
-                                    <li>
-                                        <a href="./admin/user" class="mm-active">
-                                            <i class="metismenu-icon"></i>Người dùng
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="./admin/order">
-                                            <i class="metismenu-icon"></i>Đơn hàng
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="./admin/product">
-                                            <i class="metismenu-icon"></i>Sản phẩm
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="./admin/category">
-                                            <i class="metismenu-icon"></i>Danh mục
-                                        </a>
-                                    </li>
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="./admin/order" style="display: flex; align-items: center; padding: 0.75rem 1rem; transition: all 0.3s ease; border-left: 3px solid transparent;" class="nav-item-link {{ request()->is('admin/order*') ? 'active-nav' : '' }}">
+                                    <i class="fa fa-shopping-cart" style="margin-right: 12px; min-width: 20px; font-size: 16px;"></i>
+                                    <span style="flex: 1;">Đơn hàng</span>
+                                    @if(request()->is('admin/order*'))
+                                        <i class="fa fa-check" style="margin-left: 8px; color: #667eea;"></i>
+                                    @endif
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./admin/product" style="display: flex; align-items: center; padding: 0.75rem 1rem; transition: all 0.3s ease; border-left: 3px solid transparent;" class="nav-item-link {{ request()->is('admin/product') || request()->is('admin/product/*') && !request()->is('admin/product-category*') ? 'active-nav' : '' }}">
+                                    <i class="fa fa-cube" style="margin-right: 12px; min-width: 20px; font-size: 16px;"></i>
+                                    <span style="flex: 1;">Sản phẩm</span>
+                                    @if(request()->is('admin/product') || (request()->is('admin/product/*') && !request()->is('admin/product-category*')))
+                                        <i class="fa fa-check" style="margin-left: 8px; color: #667eea;"></i>
+                                    @endif
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./admin/product-category" style="display: flex; align-items: center; padding: 0.75rem 1rem; transition: all 0.3s ease; border-left: 3px solid transparent;" class="nav-item-link {{ request()->is('admin/product-category*') ? 'active-nav' : '' }}">
+                                    <i class="fa fa-list" style="margin-right: 12px; min-width: 20px; font-size: 16px;"></i>
+                                    <span style="flex: 1;">Danh mục</span>
+                                    @if(request()->is('admin/product-category*'))
+                                        <i class="fa fa-check" style="margin-left: 8px; color: #667eea;"></i>
+                                    @endif
+                                </a>
+                            </li>
+
+                            <li style="margin-top: 2rem;">
+                                <a href="#" style="display: flex; align-items: center; transition: all 0.3s ease; padding: 0.75rem 1rem; opacity: 0.7;">
+                                    <i class="fa fa-cog" style="margin-right: 12px; min-width: 20px; font-size: 16px;"></i>
+                                    <span style="flex: 1;">Cài đặt</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
+                <style>
+                    .nav-item-link {
+                        color: #5a6c7d !important;
+                    }
+
+                    .nav-item-link:hover {
+                        background-color: rgba(102, 126, 234, 0.1);
+                        border-left-color: #667eea !important;
+                        color: #667eea !important;
+                    }
+
+                    .nav-item-link.active-nav {
+                        background-color: rgba(102, 126, 234, 0.15);
+                        border-left-color: #667eea !important;
+                        color: #667eea !important;
+                        font-weight: 600;
+                    }
+                </style>
             </div>
 
             <div class="app-main__outer">
