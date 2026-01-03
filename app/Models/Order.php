@@ -43,12 +43,13 @@ class Order extends Model
     {
         $statuses = [
             0 => ['text' => 'Đang chờ xử lý', 'badge' => 'badge-warning'],
-            1 => ['text' => 'Đã xác nhận', 'badge' => 'badge-info'],
-            2 => ['text' => 'Đang giao', 'badge' => 'badge-primary'],
+            2 => ['text' => 'Đang xác nhận', 'badge' => 'badge-primary'], 
+            1 => ['text' => 'Đang giao', 'badge' => 'badge-info'],       
             3 => ['text' => 'Đã giao', 'badge' => 'badge-success'],
-            4 => ['text' => 'Đã hủy', 'badge' => 'badge-danger']
+            4 => ['text' => 'Đã hủy', 'badge' => 'badge-danger'],
         ];
-        
-        return $statuses[$this->status] ?? ['text' => 'Không xác định', 'badge' => 'badge-secondary'];
+
+        return $statuses[$this->status]
+            ?? ['text' => 'Không xác định', 'badge' => 'badge-secondary'];
     }
 }

@@ -4,33 +4,45 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Services\Order\OrderServiceInterface;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    protected OrderServiceInterface $orderService;
-
-    public function __construct(OrderServiceInterface $orderService)
-    {
-        $this->orderService = $orderService;
-    }
-
     public function index()
     {
-        $orders = $this->orderService->getAll();
+        $orders = Order::orderBy('id', 'desc')->get();
         return view('admin.order.index', compact('orders'));
     }
 
-    public function show(Order $order)
+    public function confirm($id)
+{
+    $order = Order::findOrFail($id);
+
+    if ($order->status == 2) {
+        $order->status = 1; 
+        $order->save();
+
+        return redirect()->back()->with('notification', 'Đơn hàng đã được xác nhận và đang giao.');
+    }
+
+    return redirect()->back()->with('notification', 'Không thể xác nhận đơn hàng này!');
+}
+
+
+    public function show($id)
     {
-        $order = $this->orderService->find($order->id);
+        $order = Order::findOrFail($id);
         return view('admin.order.show', compact('order'));
     }
 
-    public function destroy(Order $order)
-    {
-        $this->orderService->delete($order->id);
-        return redirect('admin/order')->with('notification', 'Đơn hàng đã được xóa thành công!');
-    }
+    public function destroy($id)
+{
+    $order = Order::findOrFail($id);
+
+    $order->status = 4;
+    $order->save();
+
+    return redirect()->back()->with('notification', 'Đơn hàng đã được hủy.');
+}
+
 }
