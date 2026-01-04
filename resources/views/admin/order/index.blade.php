@@ -51,46 +51,62 @@
                             {{ $order->created_at->format('d/m/Y') }}
                         </td>
 
-                        <td class="text-center">
-                    <td class="text-center">
-                    {{-- Xác nhận --}}
-                    @if ($order->status == 2)
-                        <a href="{{ route('admin.order.confirm', $order->id) }}"
-                            class="btn btn-sm btn-success">
-                            Xác nhận
-                        </a>
-                    @else
-                        <button class="btn btn-sm btn-success" disabled
-                            style="opacity: 0.5; cursor: not-allowed;">
-                            Xác nhận
-                        </button>
-                    @endif
+                        
 
-                    {{-- Chi tiết --}}
-                    <a href="{{ route('admin.order.show', $order->id) }}"
-                        class="btn btn-sm btn-primary">
-                        Chi tiết
-                    </a>
+    <td class="text-center">
 
-                    {{-- Hủy đơn (icon / button) --}}
-                    @if ($order->status != 4)
-                        <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger"
-                                onclick="return confirm('Bạn có chắc chắn muốn hủy đơn này?')">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    @else
-                        {{-- Nếu đã hủy thì icon mờ & không click --}}
-                        <button class="btn btn-sm btn-danger" disabled
-                            style="opacity: 0.4; cursor: not-allowed;">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    @endif
+    {{-- Xác nhận --}}
+    @if ($order->status == 2)
+        <form action="{{ route('admin.order.confirm', $order->id) }}"
+              method="POST"
+              class="d-inline">
+            @csrf
+            @method('PATCH')
 
-                </td>
+            <button type="submit"
+                    class="btn btn-sm btn-success"
+                    onclick="return confirm('Xác nhận đơn hàng này?')">
+                Xác nhận
+            </button>
+        </form>
+    @else
+        <button class="btn btn-sm btn-success" disabled
+                style="opacity: 0.5; cursor: not-allowed;">
+            Xác nhận
+        </button>
+    @endif
+
+    {{-- Chi tiết --}}
+    <a href="{{ route('admin.order.show', $order->id) }}"
+       class="btn btn-sm btn-primary">
+        Chi tiết
+    </a>
+
+    {{-- Hủy đơn --}}
+    @if ($order->status != 4)
+        <form action="{{ route('admin.order.destroy', $order->id) }}"
+              method="POST"
+              class="d-inline">
+            @csrf
+            @method('DELETE')
+
+            <button class="btn btn-sm btn-danger"
+                    onclick="return confirm('Bạn có chắc chắn muốn hủy đơn này?')">
+                <i class="fa fa-trash"></i>
+            </button>
+        </form>
+    @else
+        <button class="btn btn-sm btn-danger" disabled
+                style="opacity: 0.4; cursor: not-allowed;">
+            <i class="fa fa-trash"></i>
+        </button>
+    @endif
+
+</td>
+
+
+</td>
+
 
 
 
