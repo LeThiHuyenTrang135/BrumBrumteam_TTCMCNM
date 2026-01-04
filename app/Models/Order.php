@@ -4,21 +4,52 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'orders';
-    protected $primaryKey = 'id';
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'first_name',
+        'last_name',
+        'company_name',
+        'country',
+        'street_address',
+        'postcode_zip',
+        'town_city',
+        'email',
+        'phone',
+        'payment_type',
+        'status'
+    ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
 
-    //relation with orderdetails
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class, 'order_id', 'id');
+        return $this->hasMany(OrderDetail::class);
     }
-    
+
+    public function getStatusLabelAttribute()
+    {
+        $statuses = [
+            0 => ['text' => 'Đang chờ xử lý', 'badge' => 'badge-warning'],
+            2 => ['text' => 'Đang xác nhận', 'badge' => 'badge-primary'], 
+            1 => ['text' => 'Đang giao', 'badge' => 'badge-info'],       
+            3 => ['text' => 'Đã giao', 'badge' => 'badge-success'],
+            4 => ['text' => 'Đã hủy', 'badge' => 'badge-danger'],
+        ];
+
+        return $statuses[$this->status]
+            ?? ['text' => 'Không xác định', 'badge' => 'badge-secondary'];
+    }
 }

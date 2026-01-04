@@ -24,6 +24,14 @@ use App\Repositories\Blog\BlogRepository;
 use App\Services\Blog\BlogServiceInterface;
 use App\Services\Blog\BlogService;
 
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
+use App\Services\User\UserServiceInterface;
+use App\Services\User\UserService;
+
+use App\Services\Order\OrderServiceInterface;
+use App\Services\Order\OrderService;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -84,6 +92,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             BlogServiceInterface::class,
             BlogService::class
+        );
+
+        $this->app->singleton(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
+//user
+        $this->app->singleton(
+            UserServiceInterface::class,
+            UserService::class
+        );
+
+        //order
+        $this->app->singleton(
+            OrderServiceInterface::class,
+            OrderService::class
         );
     }
 

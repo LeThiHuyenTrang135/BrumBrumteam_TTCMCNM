@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    public function index()
+    {
+        $orders = Order::orderBy('id', 'desc')->get();
+        return view('admin.order.index', compact('orders'));
+    }
+
+//     public function confirm($id)
+// {
+//     $order = Order::findOrFail($id);
+
+//     if ($order->status == 2) {
+//         $order->status = 1; 
+//         $order->save();
+
+//         return redirect()->back()->with('notification', 'Đơn hàng đã được xác nhận và đang giao.');
+//     }
+
+//     return redirect()->back()->with('notification', 'Không thể xác nhận đơn hàng này!');
+// }
+
+public function confirm(Order $order)
+{
+    if ($order->status != 2) {
+        return redirect()->back()
+            ->with('error', 'Không thể xác nhận đơn hàng này!');
+    }
+
+    $order->update(['status' => 1]); 
+
+    return redirect()->route('admin.order.index')
+        ->with('notification', 'Đã xác nhận đơn hàng #' . $order->id);
+}
+
+
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('admin.order.show', compact('order'));
+    }
+
+    public function destroy($id)
+{
+    $order = Order::findOrFail($id);
+
+    $order->status = 4;
+    $order->save();
+
+    return redirect()->back()->with('notification', 'Đơn hàng đã được hủy.');
+}
+
+}

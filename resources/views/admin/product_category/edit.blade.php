@@ -1,0 +1,262 @@
+@extends('admin.layout.master')
+
+@section('body')
+<!-- Main -->
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-note2 icon-gradient bg-sunny-morning"></i>
+                </div>
+                <div>
+                    Sản phẩm
+                    <div class="page-title-subheading">Cập nhật sản phẩm</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+
+                <div class="card-header">
+                    Thông tin sản phẩm
+                </div>
+
+                <div class="card-body">
+                    <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="position-relative row form-group">
+                            <label for="name" class="col-md-3 text-md-right col-form-label">
+                                Tên sản phẩm <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9 col-xl-8">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" 
+                                       id="name" name="name" value="{{ old('name', $product->name) }}" required>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="product_category_id" class="col-md-3 text-md-right col-form-label">
+                                Danh mục <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9 col-xl-8">
+                                <select class="form-control @error('product_category_id') is-invalid @enderror" 
+                                        id="product_category_id" name="product_category_id" required>
+                                    <option value="">-- Chọn danh mục --</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" 
+                                                {{ old('product_category_id', $product->product_category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('product_category_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="brand_id" class="col-md-3 text-md-right col-form-label">Thương hiệu</label>
+                            <div class="col-md-9 col-xl-8">
+                                <select class="form-control @error('brand_id') is-invalid @enderror" 
+                                        id="brand_id" name="brand_id">
+                                    <option value="">-- Chọn thương hiệu --</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}" 
+                                                {{ old('brand_id', $product->brand_id) == $brand->id ? 'selected' : '' }}>
+                                            {{ $brand->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('brand_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="price" class="col-md-3 text-md-right col-form-label">
+                                Giá <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9 col-xl-8">
+                                <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" 
+                                       id="price" name="price" value="{{ old('price', $product->price) }}" required>
+                                @error('price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="qty" class="col-md-3 text-md-right col-form-label">
+                                Số lượng <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9 col-xl-8">
+                                <input type="number" class="form-control @error('qty') is-invalid @enderror" 
+                                       id="qty" name="qty" value="{{ old('qty', $product->qty) }}" required>
+                                @error('qty')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="weight" class="col-md-3 text-md-right col-form-label">Trọng lượng (kg)</label>
+                            <div class="col-md-9 col-xl-8">
+                                <input type="number" step="0.01" class="form-control @error('weight') is-invalid @enderror" 
+                                       id="weight" name="weight" value="{{ old('weight', $product->weight) }}">
+                                @error('weight')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="description" class="col-md-3 text-md-right col-form-label">Mô tả ngắn</label>
+                            <div class="col-md-9 col-xl-8">
+                                <textarea class="form-control @error('description') is-invalid @enderror" 
+                                          id="description" name="description" rows="3">{{ old('description', $product->description) }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="content" class="col-md-3 text-md-right col-form-label">Nội dung chi tiết</label>
+                            <div class="col-md-9 col-xl-8">
+                                <textarea class="form-control @error('content') is-invalid @enderror" 
+                                          id="content" name="content" rows="5">{{ old('content', $product->content) }}</textarea>
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-md-3 text-md-right col-form-label">Hình ảnh hiện tại</label>
+                            <div class="col-md-9 col-xl-8">
+                                <div class="row" id="existing-images">
+                                    @foreach($product->images as $image)
+                                        <div class="col-md-3 mb-3" id="image-{{ $image->id }}">
+                                            <div class="position-relative">
+                                                <img src="{{ asset('storage/' . $image->path) }}" 
+                                                     class="img-thumbnail" style="width:100%; height:200px; object-fit:cover;">
+                                                <button type="button" class="btn btn-danger btn-sm position-absolute" 
+                                                        style="top:5px; right:20px;" 
+                                                        onclick="deleteImage({{ $image->id }})">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="images" class="col-md-3 text-md-right col-form-label">Thêm ảnh mới</label>
+                            <div class="col-md-9 col-xl-8">
+                                <input type="file" class="form-control-file @error('images.*') is-invalid @enderror" 
+                                       id="images" name="images[]" multiple accept="image/*" onchange="previewImages(event)">
+                                <small class="form-text text-muted">Chọn nhiều ảnh (JPEG, PNG, JPG, GIF - Max 2MB/ảnh)</small>
+                                @error('images.*')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                
+                                <div id="image-preview" class="mt-3 row"></div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="featured" class="col-md-3 text-md-right col-form-label">Sản phẩm nổi bật</label>
+                            <div class="col-md-9 col-xl-8">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="featured" name="featured" 
+                                           value="1" {{ old('featured', $product->featured) ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="featured">Đánh dấu là sản phẩm nổi bật</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <div class="col-md-9 col-xl-8 ml-md-auto">
+                                <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-secondary">Quay lại</a>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function previewImages(event) {
+    const previewContainer = document.getElementById('image-preview');
+    previewContainer.innerHTML = '';
+    
+    const files = event.target.files;
+    
+    if (files) {
+        Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const col = document.createElement('div');
+                col.className = 'col-md-3 mb-3';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-thumbnail';
+                img.style.width = '100%';
+                img.style.height = '200px';
+                img.style.objectFit = 'cover';
+                
+                col.appendChild(img);
+                previewContainer.appendChild(col);
+            }
+            
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+function deleteImage(imageId) {
+    if (!confirm('Bạn có chắc chắn muốn xóa ảnh này?')) {
+        return;
+    }
+    
+    fetch(`/admin/product/image/${imageId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`image-${imageId}`).remove();
+            alert(data.message);
+        } else {
+            alert('Có lỗi xảy ra: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra khi xóa ảnh');
+    });
+}
+</script>
+@endsection
