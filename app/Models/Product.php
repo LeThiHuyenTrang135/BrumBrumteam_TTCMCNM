@@ -25,14 +25,13 @@ class Product extends Model
     ];
 
     protected $casts = [
+        'price' => 'decimal:2',
+        'discount' => 'decimal:2',
+        'weight' => 'decimal:2',
+        'featured' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
-
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
 
     public function category()
     {
@@ -42,5 +41,20 @@ class Product extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(ProductDetail::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 }

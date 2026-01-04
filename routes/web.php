@@ -21,4 +21,10 @@ Route::prefix('admin')
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('order', OrderController::class)
             ->only(['index', 'show', 'destroy']);
+        
+        Route::patch('order/{order}/confirm', [OrderController::class, 'confirm'])
+            ->name('order.confirm');
+
+        Route::delete('product/image/{imageId}', [ProductController::class, 'deleteImage'])
+            ->name('product.image.delete');
 });

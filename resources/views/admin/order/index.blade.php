@@ -55,7 +55,7 @@
                     <td class="text-center">
                     {{-- Xác nhận --}}
                     @if ($order->status == 2)
-                        <a href="{{ route('order.confirm', $order->id) }}"
+                        <a href="{{ route('admin.order.confirm', $order->id) }}"
                             class="btn btn-sm btn-success">
                             Xác nhận
                         </a>
@@ -67,14 +67,14 @@
                     @endif
 
                     {{-- Chi tiết --}}
-                    <a href="{{ route('order.show', $order->id) }}"
+                    <a href="{{ route('admin.order.show', $order->id) }}"
                         class="btn btn-sm btn-primary">
                         Chi tiết
                     </a>
 
                     {{-- Hủy đơn (icon / button) --}}
                     @if ($order->status != 4)
-                        <form action="{{ route('order.destroy', $order->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"

@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('product-category.store') }}" method="POST">
+                    <form action="{{ route('admin.product-category.store') }}" method="POST">
                         @csrf
 
                         <div class="position-relative row form-group">
@@ -42,7 +42,7 @@
 
                         <div class="position-relative row form-group">
                             <div class="col-md-9 col-xl-8 ml-md-auto">
-                                <a href="{{ route('product-category.index') }}" class="btn btn-secondary">Quay lại</a>
+                                <a href="{{ route('admin.product-category.index') }}" class="btn btn-secondary">Quay lại</a>
                                 <button type="submit" class="btn btn-primary">Tạo mới</button>
                             </div>
                         </div>

@@ -21,7 +21,7 @@
 
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a href="{{ route('product-category.edit', $productCategory->id) }}" class="nav-link">
+            <a href="{{ route('admin.product-category.edit', $productCategory->id) }}" class="nav-link">
                 <span class="btn-icon-wrapper pr-2 opacity-8">
                     <i class="fa fa-edit fa-w-20"></i>
                 </span>
@@ -30,7 +30,7 @@
         </li>
 
         <li class="nav-item delete">
-            <form action="{{ route('product-category.destroy', $productCategory->id) }}" method="post">
+            <form action="{{ route('admin.product-category.destroy', $productCategory->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <button class="nav-link btn" type="submit"

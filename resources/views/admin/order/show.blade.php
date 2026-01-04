@@ -21,7 +21,7 @@
 
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item delete">
-            <form action="{{ route('order.destroy', $order->id) }}" method="post">
+            <form action="{{ route('admin.order.destroy', $order->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <button class="nav-link btn" type="submit"
@@ -34,7 +34,7 @@
             </form>
         </li>
         <li class="nav-item">
-            <a href="{{ route('order.index') }}" class="nav-link">
+            <a href="{{ route('admin.order.index') }}" class="nav-link">
                 <span class="btn-icon-wrapper pr-2 opacity-8">
                     <i class="fa fa-arrow-left fa-w-20"></i>
                 </span>

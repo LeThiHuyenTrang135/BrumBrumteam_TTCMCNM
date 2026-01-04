@@ -21,7 +21,7 @@
 
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
-            <a href="{{ route('product.edit', $product->id) }}" class="nav-link">
+            <a href="{{ route('admin.product.edit', $product->id) }}" class="nav-link">
                 <span class="btn-icon-wrapper pr-2 opacity-8">
                     <i class="fa fa-edit fa-w-20"></i>
                 </span>
@@ -30,7 +30,7 @@
         </li>
 
         <li class="nav-item delete">
-            <form action="{{ route('product.destroy', $product->id) }}" method="post">
+            <form action="{{ route('admin.product.destroy', $product->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <button class="nav-link btn" type="submit"
@@ -140,6 +140,25 @@
                             <p>{{ $product->updated_at->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
+                    <div class="position-relative row form-group">
+    <label class="col-md-3 text-md-right col-form-label">
+        Hình ảnh
+    </label>
+    <div class="col-md-9 col-xl-8">
+        <div class="row">
+            @foreach($product->images as $image)
+                <div class="col-md-3 mb-3">
+                    <img
+                        src="{{ asset('storage/' . $image->path) }}"
+                        class="img-thumbnail"
+                        style="width:100%; height:200px; object-fit:cover;"
+                        alt="Product image"
+                    >
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
