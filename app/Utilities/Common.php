@@ -2,18 +2,11 @@
 
 namespace App\Utilities;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class Common
 {
-    /**
-     * Upload file to public path and return relative path
-     * @param UploadedFile|null $file
-     * @param string $path (relative to public/) e.g. 'front/img/user'
-     * @return string|null
-     */
     public static function uploadFile($file, $path)
     {
         $file_name_original = $file->getClientOriginalName();

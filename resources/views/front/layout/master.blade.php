@@ -8,7 +8,7 @@
     <meta name="keywords" content="codelean, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') | BrumBrum</title>
+    <title>@yield('title') | Trang</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
 
 <body>
     <!-- Start coding here -->
-
+    
     <!-- page preloder-->
     <div id="preloder">
         <div class="loader"></div>
@@ -43,37 +43,37 @@
                 <div class="ht-left">
                     <div class = "mail-service">
                         <i class="fa fa-envelope"></i>
-                        BrumBrum@gmail.com
-                    </div>
+                        LeThiHuyenTrang@gmail.com
+                    </div>    
                     <div class="phone-service">
                         <i class="fa fa-phone"></i>
-                        +84 123 456 789
+                        +84 123456789
 
                     </div>
 
                 </div>
 
                 <div class="ht-right">
+                    
+                @if(Auth::check())
+                    <a href="./account/logout" class="login-panel">
+                        <i class="fa fa-user"></i>
+                        {{ Auth::user()->name }} - Logout
 
-                    @if (Auth::check())
-                        <a href="./account/logout" class="login-panel">
-                            <i class="fa fa-user"></i>
-                            {{ Auth::user()->name }} - Logout
+                    </a>
+                
+                @else
+                <a href="./account/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
 
-                        </a>
-                    @else
-                        <a href="./account/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    @endif
-
-
-
-
-                    <div class="lan-selector">
+                @endif
+                
+                
+                
+                
+                <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="front/img/flag-1.jpg" data-imagecss="flag yt"
-                                data-title="English">English</option>
-                            <option value='yu' data-image="front/img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Bangladesh">German</option>
+                            <option value='yt' data-image="front/img/flag-1.jpg" data-imagecss="flag yt" data-title="English">English</option>
+                            <option value='yu' data-image="front/img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh">German</option>
                         </select>
                     </div>
                     <div class="top-social">
@@ -89,81 +89,80 @@
         <div class="container">
             <div class="inner-header">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2 d-flex align-items-start">
-                        <div class="logo" style="margin-top:-12px;">
-                            <a href="/">
-                                <img src="front/img/logo3.png" alt="Logo" style="height:50px; width:auto;">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="front/img/logo.png" height="25" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
-
+                        
                         <form action="shop">
-                            <div class="advanced-search">
-                                <button type="button" class="category-btn">All Categories</button>
-                                <div class="input-group">
-                                    <input name="search" value="{{ request('search') }}" type="text"
-                                        placeholder="What do you need?">
-                                    <button type="submit"><i class="ti-search"></i></button>
-                                </div>
+                        <div class="advanced-search">
+                            <button type="button" class="category-btn">All Categories</button>
+                            <div class="input-group">
+                                <input name="search" value="{{ request('search') }}" type="text" placeholder="What do you need?">
+                                <button type="submit"><i class="ti-search"></i></button>
                             </div>
+                        </div>
                         </form>
 
                     </div>
                     <div class="col-lg-3 col-md-3 text-right">
                         <ul class="nav-right">
+                            <li class="heart-icon">
+                                <a href="#">
+                                    <i class="icon_heart_alt"></i>
+                                    <span>1</span>
+                                </a>
+                            </li>
                             <li class="cart-icon">
                                 <a href="./cart">
                                     <i class="icon_bag_alt"></i>
-                                    <span class="cart-count">{{ \Gloudemans\Shoppingcart\Facades\Cart::count() }}
-</span>
+                                    <span class="cart-count" id="cart-count">{{ Cart::count() }}</span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
-                                            <tbody>
+                                            <tbody id="cart-hover-tbody"> 
                                                 @foreach (Cart::content() as $cart)
-                                                    <tr data-rowId="{{ $cart->rowId }}">
-                                                        <td class="si-pic">
-                                                            <img style="height: 70px;"
-                                                                src="front/img/products/{{ $cart->options->images }}">
-                                                        </td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <p>${{ $cart->price }} x {{ $cart->qty }}</p>
-                                                                <h6>{{ $cart->name }}</h6>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-close">
-                                                            <i onclick="removeCart('{{ $cart->rowId }}')"
-                                                                class="ti-close"></i>
-                                                        </td>
-                                                    </tr>
+                                                <tr data-rowId="{{ $cart->rowId }}">
+                                                    <td class="si-pic">
+                                                        <img style="height: 70px;" src="front/img/products/{{ $cart->options->images }}"> 
+                                                    </td>
+                                                    <td class="si-text">
+                                                        <div class="product-selected">
+                                                            <p>${{ $cart->price }} x {{ $cart->qty }}</p>
+                                                            <h6>{{ $cart->name }}</h6>
+                                                        </div>
+                                                    </td>  
+                                                    <td class="si-close">
+                                                        <i onclick="removeCart('{{ $cart->rowId }}')" class="ti-close"></i>
+                                                    </td>  
+                                                </tr>
                                                 @endforeach
-
-
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="select-total">
                                         <span>total:</span>
-                                        <h5>${{ Cart::total() }}</h5>
+                                        <h5 id="cart-hover-total">${{ Cart::total() }}</h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="./cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href=".checkout" class="primary-btn view-card">CHECK OUT</a>
-
+                                        <a href="./cart" class="primary-btn view-card">VIEW CART</a>
+                                        <a href="./checkout" class="primary-btn view-card">CHECK OUT</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">${{ Cart::total() }}</li>
+                            <li class="cart-price" id="cart-total">${{ Cart::total() }}</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
         </div>
-
+        
         <div class="nav-item">
             <div class="container">
                 <div class="nav-depart">
@@ -179,16 +178,14 @@
                             <li><a href="#">Accessories/Shoes</a></li>
                             <li><a href="#">Luxury Brands</a></li>
                             <li><a href="#">Brand Outdoor Apparel</a></li>
-                        </ul>
+                        </ul>    
                     </div>
 
-                </div>
+                </div>    
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="{{ request()->segment(1) == '' ? 'active' : '' }}"><a href="./">Home</a>
-                        </li>
-                        <li class="{{ request()->segment(1) == 'shop' ? 'active' : '' }}"><a
-                                href="./shop">Shop</a></li>
+                        <li class="{{ (request()->segment(1) == '') ? 'active' : '' }}"><a href="./">Home</a></li>
+                        <li class="{{ (request()->segment(1) == 'shop') ? 'active' : '' }}"><a href="./shop">Shop</a></li>
                         <li><a href="">Collection</a>
                             <ul class="dropdown">
                                 <li><a href="">Men's</a></li>
@@ -200,15 +197,15 @@
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="./account/my-order">My Order</a></li>
-                                <li><a href="blog-details.html">Blog Details</a></li>
+                            <li><a href="./account/my-order">My Order</a></li>    
+                            <li><a href="blog-details.html">Blog Details</a></li>
                                 <li><a href="./cart">Shopping Cart</a></li>
                                 <li><a href="./checkout">Check Out</a></li>
                                 <li><a href="faq.html">Faq</a></li>
                                 <li><a href="register.html">Register</a></li>
                                 <li><a href="./account/login">Login</a></li>
                             </ul>
-
+                        
                         </li>
                     </ul>
 
@@ -216,17 +213,17 @@
                 <div id="mobile-menu-wrap"></div>
             </div>
         </div>
-
-    </header>
+        
+     </header>
     <!-- Header Section End -->
 
-    {{-- Body here --}}
-    @yield('body')
+{{-- Body here--}}
+@yield('body')
 
-
+    
 
     <!-- Partner Logo Section Begin-->
-    <div class="partner-logo">
+     <div class="partner-logo">
         <div class="container">
             <div class="logo-carousel owl-carousel">
                 <div class="logo-item">
@@ -257,33 +254,33 @@
             </div>
         </div>
 
-    </div>
+     </div>
     <!-- Partner Logo Section End-->
 
 
 
     <!-- Footer section begin-->
-    <footer class="footer-section">
+     <footer class="footer-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img src="front/img/logo_brumbrum.png" height="25" alt="">
+                                <img src="front/img/footer-logo.png" height="25" alt="">
                             </a>
                         </div>
                         <ul>
                             <li>Address: Da Nang</li>
-                            <li>Phone: +84 123 456 789</li>
-                            <li>Email: BrumBrum@gmail.com</li>
+                            <li>Phone: +84 123456788</li>
+                            <li>Email: LeThiHuyenTrang@gamil.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
+                        </div> 
 
                     </div>
                 </div>
@@ -317,29 +314,24 @@
                             <input type="text" placeholder="Enter Your Mail">
                             <button type="button">Subscribe</button>
                         </form>
-                    </div>
                 </div>
-
             </div>
-            <div class="copyright-reserved">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="copyright-text">
-                                Copyright
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script> All rights reserved | This template is made with <i
-                                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href=""
-                                    target="_blank">Brum Brum Team</a>
-                            </div>
-                            <div class="payment-pic">
-                                <img src="front/img/payment-method.png" alt="">
-                            </div>
+
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">Huyen Trang</a>
+                        </div>
+                        <div class="payment-pic">
+                            <img src="front/img/payment-method.png" alt="">
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
     </footer>
     <!-- Footer Section End-->
@@ -360,6 +352,58 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="front/js/main.js"></script>
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <script>
+        function addToCart(productId, qty = 1) {
+            var size = $('input[name="size"]:checked').val() || '';
+            var color = $('input[name="color"]:checked').val() || '';
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('cart.add') }}", 
+                data: { 
+                    product_id: productId, 
+                    qty: qty,
+                    size: size,
+                    color: color
+                },
+                success: function (response) {
+                    if (response.status) {
+                    alertify.set('notifier','position', 'bottom-right');
+                    alertify.success(response.message);
+                    $('#cart-count').text(response.total_qty);
+                    $('#cart-total').text('$' + response.total_price);
+                    var html = '';
+                    
+                    $.each(response.cart_content, function(rowId, cartItem) {
+                        html += '<tr data-rowId="' + cartItem.rowId + '">';
+                        html += '<td class="si-pic"><img style="height: 70px;" src="front/img/products/' + cartItem.options.images + '"></td>';
+                        html += '<td class="si-text"><div class="product-selected"><p>$' + cartItem.price + ' x ' + cartItem.qty + '</p><h6>' + cartItem.name + '</h6></div></td>';
+                        html += '<td class="si-close"><i onclick="removeCart(\'' + cartItem.rowId + '\')" class="ti-close"></i></td>';
+                        html += '</tr>';
+                    });
+                    $('#cart-hover-tbody').html(html);
+                    $('#cart-hover-total').text('$' + response.total_price);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        var confirmLogin = confirm("Bạn cần đăng nhập để mua hàng. Đến trang đăng nhập ngay?");
+                        if (confirmLogin) {
+                            window.location.href = "{{ url('account/login') }}";
+                        }
+                    } else {
+                        alert('Có lỗi xảy ra, vui lòng thử lại.');
+                        console.log(xhr);
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

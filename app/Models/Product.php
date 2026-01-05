@@ -7,65 +7,47 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
+     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'content',
-        'price',
-        'qty',
-        'discount',
-        'weight',
-        'sku',
-        'featured',
-        'tag',
-        'brand_id',
-        'product_category_id'
-    ];
+    protected $table = 'products';
+    protected $primaryKey = 'id';
+    protected $quarded = [];
 
-    protected $casts = [
-        'price' => 'decimal:2',
-        'discount' => 'decimal:2',
-        'weight' => 'decimal:2',
-        'featured' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime'
-    ];
-
-    public function category()
-    {
-        return $this->belongsTo(ProductCategory::class, 'product_category_id');
-    }
-
-    public function orderDetails()
-    {
-        return $this->hasMany(OrderDetail::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
-
-    public function details()
-    {
-        return $this->hasMany(ProductDetail::class);
-    }
-
+    //relation with brand
     public function brand()
     {
-        return $this->belongsTo(Brand::class, 'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
+    //relation with productCategories
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
+    }
+
+    //relation with orderDetails
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id', 'id'); 
+    }
+
+    //relation with productImages
     public function productImages()
-{
-    return $this->hasMany(ProductImage::class);
-}
-public function productCategory()
-{
-    return $this->belongsTo(ProductCategory::class, 'product_category_id');
-}
+    {   
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
+
+    //relation with productcomments
+    public function productComments()
+    {
+        return $this->hasMany(ProductComment::class, 'product_id', 'id');
+    }
+
+    //relation with productDetails
+    public function productDetails()
+    {
+        return $this->hasMany(ProductDetail::class, 'product_id', 'id');
+    }
 
 
 }

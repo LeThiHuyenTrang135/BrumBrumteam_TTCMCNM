@@ -20,6 +20,39 @@ Route::prefix('shop')->group(function () {
 
 
 });
+Route::middleware(['auth'])->prefix('cart')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\CartController::class, 'index'])->name('cart.index');
+    Route::match(['get', 'post'], 'add', [App\Http\Controllers\Front\CartController::class, 'add'])->name('cart.add');
+    Route::get('delete', [App\Http\Controllers\Front\CartController::class, 'delete'])->name('cart.delete');
+    Route::get('update', [App\Http\Controllers\Front\CartController::class, 'update'])->name('cart.update');
+    Route::get('destroy', [App\Http\Controllers\Front\CartController::class, 'destroy'])->name('cart.destroy');
+});
+
+Route::prefix('account')->group(function () {
+    Route::get('login', [App\Http\Controllers\Front\AccountController::class, 'login'])->name('login');
+    Route::post('login', [App\Http\Controllers\Front\AccountController::class, 'checkLogin']);
+    Route::get('logout', [App\Http\Controllers\Front\AccountController::class, 'logout']);
+    Route::get('register', [App\Http\Controllers\Front\AccountController::class, 'register']);
+    Route::post('register', [App\Http\Controllers\Front\AccountController::class, 'postRegister']);
+
+    Route::prefix('my-order')->group(function () {
+        Route::get('/', [App\Http\Controllers\Front\AccountController::class, 'myOrderIndex']);
+        Route::get('{id}', [App\Http\Controllers\Front\AccountController::class, 'myOrderShow']);
+
+    });
+    Route::get('google', [App\Http\Controllers\Front\AccountController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('google/callback', [App\Http\Controllers\Front\AccountController::class, 'handleGoogleCallback']);
+
+    Route::get('github', [App\Http\Controllers\Front\AccountController::class, 'redirectToGithub'])->name('login.github');
+    Route::get('github/callback', [App\Http\Controllers\Front\AccountController::class, 'handleGithubCallback']);
+
+    Route::get('login-phone', [App\Http\Controllers\Front\AccountController::class, 'loginPhone'])->name('login.phone');
+    Route::post('send-otp', [App\Http\Controllers\Front\AccountController::class, 'sendOtp'])->name('login.send_otp');
+    
+    Route::get('verify-otp', [App\Http\Controllers\Front\AccountController::class, 'verifyOtp'])->name('login.verify_otp');
+    Route::post('check-otp', [App\Http\Controllers\Front\AccountController::class, 'checkOtp'])->name('login.check_otp');
+    
+});
 
 //ADMIN
 Route::prefix('admin')

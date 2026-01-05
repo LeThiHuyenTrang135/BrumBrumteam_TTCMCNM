@@ -32,6 +32,9 @@ class User extends Authenticatable
         'postcode_zip',
         'town_city',
         'phone',
+        'google_id',
+        'facebook_id',
+        'github_id',
     ];
 
     /**
