@@ -57,6 +57,7 @@ Route::prefix('account')->group(function () {
 //ADMIN
 Route::prefix('admin')
     ->name('admin.')
+    ->middleware(['auth', 'role:admin'])
     ->group(function () {
 
         Route::resource('user', UserController::class);

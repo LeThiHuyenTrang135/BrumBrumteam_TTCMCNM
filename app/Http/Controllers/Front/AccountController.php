@@ -38,17 +38,23 @@ class AccountController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-            'level' => 2,
         ];
 
         $remember = $request->remember;
 
         if (Auth::attempt($credentials, $remember)) {
             $userId = Auth::id();
+            $user = Auth::user();
+            
             $oldCart = DB::table('shoppingcart')->where('identifier', $userId)->first();
             
             if ($oldCart) {
                 Cart::restore($userId);
+            }
+
+            // Redirect theo role
+            if ($user->hasRole('admin')) {
+                return redirect('/admin/user');
             }
 
             return redirect('');
