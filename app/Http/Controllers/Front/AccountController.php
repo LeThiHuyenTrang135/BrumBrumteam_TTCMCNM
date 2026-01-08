@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Services\Order\OrderServiceInterface;
 use App\Services\User\UserServiceInterface;
 use App\Utilities\Constant;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationCodeMail;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\VerifyCodeRequest;
+use App\Http\Requests\ResendCodeRequest;
 
 class AccountController extends Controller
 {
@@ -88,23 +94,35 @@ class AccountController extends Controller
         return view('front.account.register');
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(RegisterRequest $request)
     {
-        if ($request->password != $request->password_confirmation) {
-            return back()->with('notification', 'ERROR: Confire password does not match');
+        try {
+            $verificationCode = strtoupper(Str::random(6));
 
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'level' => Constant::user_level_client,
+                'verification_code' => $verificationCode,
+                'code_expires_at' => now()->addMinutes(10),
+                'is_verified' => false,
+            ];
+
+            $user = $this->userService->create($data);
+
+            Mail::to($user->email)->send(
+                new VerificationCodeMail($verificationCode, $user->name)
+            );
+
+            return redirect()->route('verify.form')
+                ->with('success', 'Registration successful! Please check your email for verification code.')
+                ->with('email', $user->email);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('notification', 'ERROR: Registration failed - ' . $e->getMessage())
+                ->withInput();
         }
-
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'level' => Constant::user_level_client,
-        ];
-
-        $this->userService->create($data);
-
-        return redirect('account/login')->with('notification', 'Register Success Please login');
     }
 
     public function myOrderIndex()
@@ -250,5 +268,85 @@ class AccountController extends Controller
         } else {
             return back()->with('notification', 'Mã OTP không đúng hoặc đã hết hạn!');
         }
+    }
+
+    public function showVerifyForm(Request $request)
+    {
+        $email = session('email') ?? $request->email ?? old('email');
+
+        $maskedEmail = '';
+        if ($email) {
+            $parts = explode('@', $email);
+            $name = $parts[0];
+            $domain = $parts[1] ?? '';
+
+            $len = strlen($name);
+            $maskedName = ($len > 2)
+                ? str_repeat('*', $len - 2) . substr($name, -2)
+                : str_repeat('*', $len);
+
+            $maskedEmail = $maskedName . '@' . $domain;
+        }
+        return view('front.account.verify.index', compact('email'));
+    }
+
+    public function verifyEmail(VerifyCodeRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->is_verified) {
+            return redirect()->back()->with('info', 'Email is already verified. You can login now.');
+        }
+
+        if ($user->verification_code !== $request->code) {
+            return redirect()->back()
+                ->with('error', 'Invalid verification code')
+                ->withInput();
+        }
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'level' => Constant::user_level_client,
+        ];
+
+        if ($user->code_expires_at < now()) {
+            return redirect()->back()
+                ->with('error', 'Verification code has expired. Please request a new one.')
+                ->withInput();
+        }
+
+        $user->update([
+            'is_verified' => true,
+            'verification_code' => null,
+            'code_expires_at' => null,
+            'email_verified_at' => now(),
+        ]);
+
+        return redirect()->route('account.login')->with('success', 'Email verified successfully! You can now login.');
+    }
+
+    public function resendCode(ResendCodeRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->is_verified) {
+            return redirect()->back()->with('info', 'Email is already verified.');
+        }
+
+        $verificationCode = strtoupper(Str::random(6));
+
+        $user->update([
+            'verification_code' => $verificationCode,
+            'code_expires_at' => now()->addMinutes(10),
+        ]);
+
+        Mail::to($user->email)->send(
+            new VerificationCodeMail($verificationCode, $user->name)
+        );
+
+        return redirect()->back()
+        ->with('success', 'Verification code has been resent to your email.')
+        ->with('email', $user->email);
     }
 }

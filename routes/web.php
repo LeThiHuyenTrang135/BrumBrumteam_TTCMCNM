@@ -7,9 +7,10 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Front\AccountController;
+use App\Http\Controllers\Front\CartController;
 
-
-Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('shop')->group(function () {
     Route::get('product/{id}', [ShopController::class, 'show']);
@@ -17,41 +18,42 @@ Route::prefix('shop')->group(function () {
         ->name('product.comment');
 
     Route::post('product/{id}', [ShopController::class, 'postComment'])->name('shop.postComment');
-
-
 });
+
 Route::middleware(['auth'])->prefix('cart')->group(function () {
-    Route::get('/', [App\Http\Controllers\Front\CartController::class, 'index'])->name('cart.index');
-    Route::match(['get', 'post'], 'add', [App\Http\Controllers\Front\CartController::class, 'add'])->name('cart.add');
-    Route::get('delete', [App\Http\Controllers\Front\CartController::class, 'delete'])->name('cart.delete');
-    Route::get('update', [App\Http\Controllers\Front\CartController::class, 'update'])->name('cart.update');
-    Route::get('destroy', [App\Http\Controllers\Front\CartController::class, 'destroy'])->name('cart.destroy');
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::match(['get', 'post'], 'add', [CartController::class, 'cart.add'])->name('cart.add');
+    Route::get('delete', [CartController::class, 'delete'])->name('cart.delete');
+    Route::get('update', [CartController::class, 'update'])->name('cart.update');
+    Route::get('destroy', [CartController::class, 'destroy'])->name('cart.destroy');
 });
 
 Route::prefix('account')->group(function () {
-    Route::get('login', [App\Http\Controllers\Front\AccountController::class, 'login'])->name('login');
-    Route::post('login', [App\Http\Controllers\Front\AccountController::class, 'checkLogin']);
-    Route::get('logout', [App\Http\Controllers\Front\AccountController::class, 'logout']);
-    Route::get('register', [App\Http\Controllers\Front\AccountController::class, 'register']);
-    Route::post('register', [App\Http\Controllers\Front\AccountController::class, 'postRegister']);
+    Route::get('login', [AccountController::class, 'login'])->name('login');
+    Route::post('login', [AccountController::class, 'checkLogin']);
+    Route::get('logout', [AccountController::class, 'logout']);
+    Route::get('register', [AccountController::class, 'register']);
+    Route::post('register', [AccountController::class, 'postRegister']);
+
+    Route::get('verify', [AccountController::class, 'showVerifyForm'])->name('verify.form');
+    Route::post('verify', [AccountController::class, 'verifyEmail'])->name('verify');
+    Route::post('resend-code', [AccountController::class, 'resendCode'])->name('resend.code');
 
     Route::prefix('my-order')->group(function () {
-        Route::get('/', [App\Http\Controllers\Front\AccountController::class, 'myOrderIndex']);
-        Route::get('{id}', [App\Http\Controllers\Front\AccountController::class, 'myOrderShow']);
-
+        Route::get('/', [AccountController::class, 'myOrderIndex']);
+        Route::get('{id}', [AccountController::class, 'myOrderShow']);
     });
-    Route::get('google', [App\Http\Controllers\Front\AccountController::class, 'redirectToGoogle'])->name('login.google');
-    Route::get('google/callback', [App\Http\Controllers\Front\AccountController::class, 'handleGoogleCallback']);
+    Route::get('google', [AccountController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('google/callback', [AccountController::class, 'handleGoogleCallback']);
 
-    Route::get('github', [App\Http\Controllers\Front\AccountController::class, 'redirectToGithub'])->name('login.github');
-    Route::get('github/callback', [App\Http\Controllers\Front\AccountController::class, 'handleGithubCallback']);
+    Route::get('github', [AccountController::class, 'redirectToGithub'])->name('login.github');
+    Route::get('github/callback', [AccountController::class, 'handleGithubCallback']);
 
-    Route::get('login-phone', [App\Http\Controllers\Front\AccountController::class, 'loginPhone'])->name('login.phone');
-    Route::post('send-otp', [App\Http\Controllers\Front\AccountController::class, 'sendOtp'])->name('login.send_otp');
-    
-    Route::get('verify-otp', [App\Http\Controllers\Front\AccountController::class, 'verifyOtp'])->name('login.verify_otp');
-    Route::post('check-otp', [App\Http\Controllers\Front\AccountController::class, 'checkOtp'])->name('login.check_otp');
-    
+    Route::get('login-phone', [AccountController::class, 'loginPhone'])->name('login.phone');
+    Route::post('send-otp', [AccountController::class, 'sendOtp'])->name('login.send_otp');
+
+    Route::get('verify-otp', [AccountController::class, 'verifyOtp'])->name('login.verify_otp');
+    Route::post('check-otp', [AccountController::class, 'checkOtp'])->name('login.check_otp');
 });
 
 //ADMIN
@@ -65,11 +67,10 @@ Route::prefix('admin')
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('order', OrderController::class)
             ->only(['index', 'show', 'destroy']);
-        
-        Route::patch('order/confirm/{order}', [OrderController::class, 'confirm'])
-    ->name('order.confirm');
 
+        Route::patch('order/confirm/{order}', [OrderController::class, 'confirm'])
+            ->name('order.confirm');
 
         Route::delete('product/image/{imageId}', [ProductController::class, 'deleteImage'])
             ->name('product.image.delete');
-});
+    });

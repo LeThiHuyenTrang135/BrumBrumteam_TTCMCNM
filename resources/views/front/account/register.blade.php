@@ -1,12 +1,7 @@
 @extends('front.layout.master')
-
 @section('title', 'Register')
 
-
 @section('body')
-
-
-
     <!-- -->
     <!-- Breadcrumb section begin-->
     <div class="breadcrumb-section">
@@ -25,19 +20,28 @@
 
 
     <!-- Register Section Begin-->
-     <div class="register-login-section spad">
+    <div class="register-login-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
                         <h2>Register</h2>
 
-                        @if(session('notification'))
-                            <div class="alert alert-warning" role="alert" >
+                        @if (session('notification'))
+                            <div class="alert alert-warning" role="alert">
                                 {{ session('notification') }}
                             </div>
                         @endif
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <form action="" method="post">
                             @csrf
@@ -66,8 +70,6 @@
                 </div>
             </div>
         </div>
-     </div>
+    </div>
     <!-- Register Section End-->
 @endsection
-
-
