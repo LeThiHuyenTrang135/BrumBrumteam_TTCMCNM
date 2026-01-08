@@ -6,10 +6,6 @@
         <div class="sale">Sale</div>
         @endif
 
-
-        <div class="icon">
-            <i class="icon_heart_alt"></i>
-        </div>
         <ul>
             <li class="w-icon active">
                 <a href="javascript:void(0);" onclick="addToCart({{ $product->id }})">
