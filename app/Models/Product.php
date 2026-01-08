@@ -11,7 +11,7 @@ class Product extends Model
 
     protected $table = 'products';
     protected $primaryKey = 'id';
-    protected $quarded = [];
+    protected $guarded = [];
 
     //relation with brand
     public function brand()
@@ -48,6 +48,17 @@ class Product extends Model
     {
         return $this->hasMany(ProductDetail::class, 'product_id', 'id');
     }
+
+    public function category()
+{
+    return $this->productCategory();
+}
+
+public function images()
+{
+    return $this->productImages();
+}
+
 
 
 }

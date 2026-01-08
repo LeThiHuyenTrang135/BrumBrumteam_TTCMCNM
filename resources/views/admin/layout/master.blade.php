@@ -211,14 +211,12 @@
                                                                         class="vertical-timeline-element-content bounce-in">
                                                                         <h4 class="timeline-title">Something not
                                                                             important
+
                                                                             <div
                                                                                 class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                                                                                 <div
                                                                                     class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                    <div class="avatar-icon">
-                                                                                        <img src="dashboard/assets/images/avatars/1.jpg"
-                                                                                            alt="">
-                                                                                    </div>
+                                                                                  
                                                                                 </div>
                                                                                 <div
                                                                                     class="avatar-icon-wrapper avatar-icon-sm">
@@ -604,9 +602,7 @@
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="dashboard/assets/images/avatars/1.jpg"
-                                                alt="">
-                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
                                             class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
@@ -618,10 +614,7 @@
                                                     <div class="menu-header-content text-left">
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left mr-3">
-                                                                    <img width="42" class="rounded-circle"
-                                                                        src="dashboard/assets/images/avatars/1.jpg" alt="">
-                                                                </div>
+                                                             
                                                                 <div class="widget-content-left">
                                                                     <div class="widget-heading">Alina Mcloughlin</div>
                                                                     <div class="widget-subheading opacity-8">A short
@@ -701,10 +694,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading"> Alina Mclourd </div>
-                                    <div class="widget-subheading"> VP People Manager </div>
-                                </div>
+                        
                                 <div class="widget-content-right header-user-info ml-3">
                                     <button type="button"
                                         class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
@@ -1385,80 +1375,7 @@
                                                                                     class="vertical-timeline-element-content bounce-in">
                                                                                     <h4 class="timeline-title">Something
                                                                                         not important
-                                                                                        <div
-                                                                                            class="avatar-wrapper mt-2 avatar-wrapper-overlap">
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/1.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/2.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/3.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/4.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/5.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/9.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/7.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <img src="dashboard/assets/images/avatars/8.jpg"
-                                                                                                        alt="">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="avatar-icon-wrapper avatar-icon-sm avatar-icon-add">
-                                                                                                <div
-                                                                                                    class="avatar-icon">
-                                                                                                    <i>+</i>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        
                                                                                     </h4>
                                                                                     <span
                                                                                         class="vertical-timeline-element-date"></span>
@@ -2277,12 +2194,7 @@
                                                     for="exampleCustomCheckbox2444">&nbsp;</label>
                                             </div>
                                         </div>
-                                        <div class="widget-content-left mr-3">
-                                            <div class="widget-content-left">
-                                                <img width="42" class="rounded" src="dashboard/assets/images/avatars/1.jpg"
-                                                    alt="" />
-                                            </div>
-                                        </div>
+                                       
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Go grocery shopping</div>
                                             <div class="widget-subheading">A short description ...</div>
@@ -2372,9 +2284,7 @@
                                         <h4 class="timeline-title">Something not important
                                             <div class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
-                                                    <div class="avatar-icon">
-                                                        <img src="dashboard/assets/images/avatars/1.jpg" alt="">
-                                                    </div>
+                                                   
                                                 </div>
                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                     <div class="avatar-icon">

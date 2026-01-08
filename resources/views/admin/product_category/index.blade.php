@@ -79,7 +79,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $category->created_at->format('d/m/Y') }}</td>
+                               <td class="text-center">
+    {{ optional($category->created_at)->format('d/m/Y') }}
+</td>
+
                                 <td class="text-center">
                                     <a href="{{ route('admin.product-category.show', $category->id) }}"
                                         class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">

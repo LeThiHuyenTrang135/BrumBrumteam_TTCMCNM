@@ -113,7 +113,10 @@
                                         <span class="badge badge-danger">Hết hàng</span>
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $product->created_at->format('d/m/Y') }}</td>
+                                <td class="text-center">
+    {{ optional($product->created_at)->format('d/m/Y') }}
+</td>
+
                                 <td class="text-center">
                                     <a href="{{ route('admin.product.show', $product->id) }}"
                                         class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
