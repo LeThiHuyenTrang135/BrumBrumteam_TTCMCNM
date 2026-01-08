@@ -323,7 +323,7 @@ class AccountController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        return redirect()->route('account.login')->with('success', 'Email verified successfully! You can now login.');
+        return redirect()->route('login')->with('success', 'Email verified successfully! You can now login.');
     }
 
     public function resendCode(ResendCodeRequest $request)

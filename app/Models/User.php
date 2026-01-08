@@ -36,6 +36,10 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'github_id',
+
+        'verification_code',
+        'code_expires_at',
+        'is_verified',
     ];
 
     /**
@@ -46,6 +50,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'verification_code',
     ];
 
     /**
@@ -58,6 +63,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'code_expires_at' => 'datetime',
+            'is_verified' => 'boolean',
         ];
     }
 }
