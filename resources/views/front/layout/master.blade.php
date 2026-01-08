@@ -257,7 +257,7 @@
                         <ul>
                             <li>Address: Da Nang</li>
                             <li>Phone: +84 123 456 789</li>
-                            <li>Email: BrumBrum@gamil.com</li>
+                            <li>Email: BrumBrum@gmail.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
