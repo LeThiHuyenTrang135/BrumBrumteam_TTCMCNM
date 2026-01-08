@@ -31,6 +31,8 @@ use App\Services\User\UserService;
 
 use App\Services\Order\OrderServiceInterface;
 use App\Services\Order\OrderService;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Order\OrderRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -105,6 +107,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         //order
+        $this->app->singleton(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
+        );
+
         $this->app->singleton(
             OrderServiceInterface::class,
             OrderService::class

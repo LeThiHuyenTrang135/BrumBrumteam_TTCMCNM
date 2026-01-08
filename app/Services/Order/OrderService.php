@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Services\Order;
+use App\Repositories\Order\OrderRepositoryInterface;
 
 use App\Models\Order;
 
 class OrderService implements OrderServiceInterface
 {
+    public $repository;
+    public function __construct(OrderRepositoryInterface $OrderRepository)
+    {
+        $this->repository = $OrderRepository;
+    }
     public function getAll()
     {
         return Order::with('user', 'orderDetails')->latest()->get();
@@ -28,5 +34,10 @@ class OrderService implements OrderServiceInterface
         $order = Order::findOrFail($id);
         $order->update(['status' => $status]);
         return $order;
+    }
+
+    public function getOrderByUserId($userId)
+    {
+        return $this->repository->getOrderByUserId($userId);
     }
 }

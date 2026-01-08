@@ -31,12 +31,27 @@
                     <div class="login-form">
                         <h2>Login</h2>
 
-                        @if(session('notification'))
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('notification'))
                             <div class="alert alert-warning" role="alert">
                                 {{ session('notification') }}
                             </div>
                         @endif
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
 
                         <form action="" method="post">
