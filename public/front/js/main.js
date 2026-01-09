@@ -310,7 +310,7 @@ function addCart(productId) {
                 '<tr data-rowId="' + response['cart'].rowId + '">\n' +
                 '    <td class="si-pic">\n' +
                 '        <img style="height: 70px;"\n' +
-                '        src="front/img/products/' + response['cart'].options.images + '">\n' +
+                '        src="storage/' + response['cart'].options.images + '">\n' +
                 '    </td>\n' +
                 '    <td class="si-text">\n' +
                 '        <div class="product-selected">\n' +
