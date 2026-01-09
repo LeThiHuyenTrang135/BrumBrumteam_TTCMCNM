@@ -1,9 +1,11 @@
 <div class="product-item item {{ $product->tag }}">
     <div class="pi-pic">
-        <img src="front/img/products/{{ $product->productImages[0]->path }}" alt="">
+        <img class="product-big-img" src="{{ asset('storage/' . $product->productImages[0]->path) }}" 
+        alt=""
+        style="width: 282px; height: 317px">
 
-        @if($product->discount != null)
-        <div class="sale">Sale</div>
+        @if ($product->discount != null)
+            <div class="sale">Sale</div>
         @endif
 
         <ul>
@@ -23,12 +25,11 @@
         </a>
         <div class="product-price">
 
-            @if($product->discount != null)
-
-            $ {{ $product->discount }}
-            <span>${{ $product->price }}</span>
+            @if ($product->discount != null)
+                $ {{ $product->discount }}
+                <span>${{ $product->price }}</span>
             @else
-            ${{ $product->price }}
+                ${{ $product->price }}
             @endif
 
         </div>

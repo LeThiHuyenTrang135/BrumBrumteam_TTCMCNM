@@ -251,7 +251,7 @@
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img src="front/img/logo_brumbrum" height="25" alt="">
+                                <img src="front/img/logo_brumbrum.png" height="25" alt="">
                             </a>
                         </div>
                         <ul>

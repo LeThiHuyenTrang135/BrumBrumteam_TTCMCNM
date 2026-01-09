@@ -127,20 +127,20 @@
                     </div>
                     @endif
 
-                    <div class="position-relative row form-group">
+                    {{-- <div class="position-relative row form-group">
                         <label for="created_at" class="col-md-3 text-md-right col-form-label">Ngày tạo</label>
                         <div class="col-md-9 col-xl-8">
                             <p>{{ $product->created_at->format('d/m/Y H:i') }}</p>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="position-relative row form-group">
+                    {{-- <div class="position-relative row form-group">
                         <label for="updated_at" class="col-md-3 text-md-right col-form-label">Cập nhật</label>
                         <div class="col-md-9 col-xl-8">
                             <p>{{ $product->updated_at->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
-                    <div class="position-relative row form-group">
+                    <div class="position-relative row form-group"> --}}
     <label class="col-md-3 text-md-right col-form-label">
         Hình ảnh
     </label>
