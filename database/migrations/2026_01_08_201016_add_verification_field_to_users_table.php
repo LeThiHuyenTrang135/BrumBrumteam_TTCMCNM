@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('verification_code', 6)->nullable();
-            $table->timestamp('code_expires_at')->nullable();
-            $table->boolean('is_verified')->default(false);
-        });
+        if (!Schema::hasColumn('users', 'verification_code')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('verification_code', 6)->nullable();
+                $table->timestamp('code_expires_at')->nullable();
+                $table->boolean('is_verified')->default(false);
+            });
+        }
     }
 
     /**
