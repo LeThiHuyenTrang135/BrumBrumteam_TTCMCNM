@@ -22,7 +22,7 @@ Route::prefix('shop')->group(function () {
 
 Route::middleware(['auth'])->prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::match(['get', 'post'], 'add', [CartController::class, 'cart.add'])->name('cart.add');
+    Route::match(['get', 'post'], 'add', [CartController::class, 'add'])->name('cart.add');
     Route::get('delete', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('update', [CartController::class, 'update'])->name('cart.update');
     Route::get('destroy', [CartController::class, 'destroy'])->name('cart.destroy');
