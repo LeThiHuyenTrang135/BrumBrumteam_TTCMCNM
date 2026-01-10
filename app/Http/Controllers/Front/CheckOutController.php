@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-
 use App\Services\Order\OrderServiceInterface;
 use App\Services\OrderDetail\OrderDetailServiceInterface;
 use App\Utilities\Constant;
@@ -17,6 +16,7 @@ class CheckOutController extends Controller
 {
     private $orderService;
     private $orderDetailService;
+
     public function __construct(
         OrderServiceInterface $orderService,
         OrderDetailServiceInterface $orderDetailService
@@ -24,87 +24,88 @@ class CheckOutController extends Controller
         $this->orderService = $orderService;
         $this->orderDetailService = $orderDetailService;
     }
+
     public function index()
     {
-        $carts = Cart::content();
-        $total = Cart::total();
-        $subtotal = Cart::subtotal();
-
-        return view('front.checkout.index', compact('carts', 'total', 'subtotal'));
+        return view('front.checkout.index', [
+            'carts' => Cart::content(),
+            'total' => Cart::total(),
+            'subtotal' => Cart::subtotal(),
+        ]);
     }
 
-
+    // ======================================================
+    // TẠO ĐƠN HÀNG
+    // ======================================================
     public function addOrder(Request $request)
     {
-
         $data = $request->except('amount');
 
+        /**
+         * SET STATUS BAN ĐẦU (THEO LOGIC ĐÃ CHỐT)
+         * pay_later  → 2 (Đang xác nhận)
+         * vnpay/stripe → 0 (Đang chờ xử lý)
+         */
         if ($request->payment_type === Constant::PAYMENT_PAY_LATER) {
-            $data['status'] = Constant::order_status_ReceiveOrders; // = 1
+            $data['status'] = 2;
         } else {
-            // online / stripe
-            $data['status'] = Constant::order_status_Unconfirmed; // = 2
+            $data['status'] = 0;
         }
-                $order = $this->orderService->create($data);
 
+        // 1️⃣ TẠO ORDER
+        $order = $this->orderService->create($data);
 
-        // 2) TẠO CHI TIẾT ĐƠN HÀNG (order_details)
-        // ======================================================================
-        $carts = Cart::content();
-
-        foreach ($carts as $cart) {
-            $data = [
+        // 2️⃣ TẠO ORDER DETAILS
+        foreach (Cart::content() as $cart) {
+            $this->orderDetailService->create([
                 'order_id'   => $order->id,
                 'product_id' => $cart->id,
                 'qty'        => $cart->qty,
                 'amount'     => $cart->price,
                 'total'      => $cart->price * $cart->qty,
-            ];
-
-            $this->orderDetailService->create($data);
+            ]);
         }
 
+        // ==================================================
+        // PAY LATER → 2 → (admin xử lý tiếp)
+        // ==================================================
+        if ($request->payment_type === Constant::PAYMENT_PAY_LATER) {
 
-        // 3) PAY LATER → xóa giỏ → chuyển trang result
-        // ======================================================================
-        if ($request->payment_type === 'pay_later') {
-
-            //gui mail
-            $total = Cart::total();
-            $subtotal = Cart::subtotal();
-            $this->sendEmail($order, $total, $subtotal);
-
+            $this->sendEmail($order, Cart::total(), Cart::subtotal());
             Cart::destroy();
 
             return redirect('checkout/result')
-                ->with('notification', 'Success! You will pay on delivery. Please check your email.');
+                ->with('notification', 'Success! You will pay on delivery.');
         }
 
-        // 4) ONLINE PAYMENT
-        // ======================================================================
-        if ($request->payment_type === 'online_payment') {
-            //01 lấy URL thanh toán VNPay
+        // ==================================================
+        // VNPAY
+        // ==================================================
+        if ($request->payment_type === Constant::PAYMENT_ONLINE) {
+
             $usdTotal = (float) Cart::total(0, '', '');
             $rate = 29262;
             $vndTotal = (int) round($usdTotal * $rate);
-            $vnpAmount = $vndTotal * 100;
 
-            $data_url = VNPay::vnpay_create_payment([
-                'vnp_TxnRef' => $order->id,
-                'vnp_OrderInfo' => 'Thanh toan don hang tai EShop',
-                'vnp_Amount' => $vnpAmount,
-
+            $vnpUrl = VNPay::vnpay_create_payment([
+                'vnp_TxnRef'    => $order->id,
+                'vnp_OrderInfo'=> 'Thanh toan don hang tai EShop',
+                'vnp_Amount'   => $vndTotal * 100,
             ]);
 
-            //02 Chuyển hướng sang VNPay
-            return redirect()->to($data_url);
+            return redirect()->to($vnpUrl);
         }
+
+        return back()->with('notification', 'Invalid payment method.');
     }
 
+    // ======================================================
+    // VNPAY CALLBACK
+    // ======================================================
     public function vnPayCheck(Request $request)
     {
-        $vnp_ResponseCode = $request->get('vnp_ResponseCode');
         $orderId = $request->get('vnp_TxnRef');
+        $responseCode = $request->get('vnp_ResponseCode');
 
         $order = $this->orderService->find($orderId);
         if (!$order) {
@@ -112,42 +113,43 @@ class CheckOutController extends Controller
                 ->with('notification', 'Order not found.');
         }
 
-        if ($vnp_ResponseCode === '00') {
-            $order->status = Constant::order_status_Paid;
+        /**
+         * THANH TOÁN THÀNH CÔNG
+         * 0 → 1 (Đang giao)
+         */
+        if ($responseCode === '00') {
+
+            $order->status = 1;
             $order->save();
 
-            $total = Cart::total();
-            $subtotal = Cart::subtotal();
-
-            $this->sendEmail($order, $total, $subtotal);
+            $this->sendEmail($order, Cart::total(), Cart::subtotal());
             Cart::destroy();
 
             return redirect('checkout/result')
-                ->with('notification', 'Payment Success! Has paid via VNPAY.');
+                ->with('notification', 'Payment Success! Paid via VNPAY.');
         }
-        $order->status = Constant::order_status_Cancel; // = 0
+
+        /**
+         * THANH TOÁN THẤT BẠI
+         * 0 → 4 (Đã hủy)
+         */
+        $order->status = 4;
         $order->save();
 
         return redirect('checkout/result')
-            ->with('notification', 'Payment Failed! Order is pending.');
+            ->with('notification', 'Payment Failed! Order has been cancelled.');
     }
 
-
     public function result()
-    {   
-        $notification = session('notification');
-        return view('front.checkout.result', compact('notification'));    
+    {
+        return view('front.checkout.result', [
+            'notification' => session('notification')
+        ]);
     }
 
     private function sendEmail($order, $total, $subtotal)
     {
-        $email_to = $order->email;
-
         Mail::to($order->email)
-            ->send(new OrderNotification(
-                $order,
-                $total,
-                $subtotal
-            ));
+            ->send(new OrderNotification($order, $total, $subtotal));
     }
 }

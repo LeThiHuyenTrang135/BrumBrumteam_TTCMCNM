@@ -95,7 +95,8 @@
                     <div class="checkout-content">
                         <a href="#" class="content-btn">
                             Status:
-                            <b>{{ \App\Utilities\Constant::$order_status[$order->status] }}</b>
+                           <b>{{ $order->status_label['text'] }}</b>
+
                         </a>
                     </div>
                     <div class="place-order">

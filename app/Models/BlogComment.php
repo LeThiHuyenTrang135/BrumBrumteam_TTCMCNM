@@ -11,7 +11,7 @@ class BlogComment extends Model
 
     protected $table = 'blog_comments';
     protected $primaryKey = 'id';
-    protected $quarded = [];
+    protected $guarded = [];
 
     //relation with blog
     public function blog()

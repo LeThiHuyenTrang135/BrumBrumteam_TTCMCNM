@@ -32,6 +32,7 @@ public function add(Request $request)
         'qty' => (int) ($request->qty ?? 1),
         'price' => $product->discount ?? $product->price,
         'weight' => $product->weight ?? 0,
+        'taxrate' => 0,
         'options' => [
             'images' => $product->productImages->first()->path ?? '',
             'size' => $request->size ?? '',

@@ -37,7 +37,7 @@ class StripeController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'payment_type' => Constant::PAYMENT_STRIPE,
-            'status' => Constant::order_status_Unconfirmed,
+            'status' => Constant::order_status_Pending,
         ]);
 
         foreach (Cart::content() as $item) {
@@ -86,7 +86,7 @@ class StripeController extends Controller
 
         if ($orderId) {
             $order = $this->orderService->find($orderId);
-            if ($order && $order->status !== Constant::order_status_Paid) {
+            if ($order && $order->status === Constant::order_status_Pending) {
                 $order->status = Constant::order_status_Cancel;
                 $order->save();
             }

@@ -11,7 +11,7 @@ class ProductComment extends Model
 
     protected $table = 'product_comments';
     protected $primaryKey = 'id';
-    protected $quarded = [];
+    protected $guarded = [];
 
     //relation with product
     public function product()

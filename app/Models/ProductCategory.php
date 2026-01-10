@@ -11,7 +11,7 @@ class ProductCategory extends Model
 
     protected $table = 'product_categories';
     protected $primaryKey = 'id';
-    protected $quarded = [];
+    protected $guarded = [];
 
     //relation with products
     public function products()

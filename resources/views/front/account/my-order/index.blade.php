@@ -99,73 +99,65 @@
 <td class="first-row">
     @php
         $paymentType = $order->payment_type;
-        $status = $order->status;
+        $status = (int) $order->status;
     @endphp
 
+    {{-- PAY LATER --}}
     @if ($paymentType === 'pay_later')
-
         @switch($status)
-            @case(1)
-                <span class="badge badge-secondary">Đã đặt hàng</span>
+            @case(2)
+                <span class="badge badge-warning">Đang xác nhận</span>
                 @break
 
-            @case(2)
-                <span class="badge badge-warning">Chờ xác nhận</span>
+            @case(1)
+                <span class="badge badge-info">Đang giao</span>
                 @break
 
             @case(3)
-                <span class="badge badge-primary">Đã xác nhận</span>
-                @break
-
-            @case(5)
-                <span class="badge badge-info">Đang xử lý</span>
-                @break
-
-            @case(6)
-                <span class="badge badge-warning">Đang vận chuyển</span>
+                <span class="badge badge-primary">Đã giao</span>
                 @break
 
             @case(7)
                 <span class="badge badge-success">Hoàn thành</span>
-                @break
-
-            @case(0)
-                <span class="badge badge-danger">Đã hủy</span>
-                @break
-        @endswitch
-
-
-    {{-- VNPAY / STRIPE --}}
-    @else
-
-        @switch($status)
-            @case(1)
-                <span class="badge badge-secondary">Đã đặt hàng</span>
                 @break
 
             @case(4)
-                <span class="badge badge-success">Đã thanh toán</span>
+                <span class="badge badge-danger">Đã hủy</span>
                 @break
 
-            @case(5)
-                <span class="badge badge-info">Đang xử lý</span>
+            @default
+                <span class="badge badge-secondary">Không xác định</span>
+        @endswitch
+
+    {{-- VNPAY / STRIPE --}}
+    @else
+        @switch($status)
+            @case(0)
+                <span class="badge badge-warning">Chờ thanh toán</span>
                 @break
 
-            @case(6)
-                <span class="badge badge-warning">Đang vận chuyển</span>
+            @case(1)
+                <span class="badge badge-info">Đang giao</span>
+                @break
+
+            @case(3)
+                <span class="badge badge-primary">Đã giao</span>
                 @break
 
             @case(7)
                 <span class="badge badge-success">Hoàn thành</span>
                 @break
 
-            @case(0)
+            @case(4)
                 <span class="badge badge-danger">Đã hủy</span>
                 @break
-        @endswitch
 
+            @default
+                <span class="badge badge-secondary">Không xác định</span>
+        @endswitch
     @endif
 </td>
+
 
 
 
