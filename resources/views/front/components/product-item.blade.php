@@ -1,14 +1,16 @@
 <div class="product-item item {{ $product->tag }}">
     <div class="pi-pic">
-        <img src="front/img/products/{{ $product->productImages[0]->path }}" alt="">
+         <img src="front/img/products/{{ $product->productImages[0]->path }}" alt=""
+        alt=""
+        style="width: 282px; height: 317px">
 
-        @if($product->discount != null)
-        <div class="sale">Sale</div>
+        @if ($product->discount != null)
+            <div class="sale">Sale</div>
         @endif
 
         <ul>
             <li class="w-icon active">
-                <a href="javascript:void(0);" onclick="addToCart({{ $product->id }})">
+                <a href="javascript:void(0);" onclick="addToCart('{{ $product->id }}')">
                     <i class="icon_bag_alt"></i>
                 </a>
             </li>
@@ -23,12 +25,11 @@
         </a>
         <div class="product-price">
 
-            @if($product->discount != null)
-
-            $ {{ $product->discount }}
-            <span>${{ $product->price }}</span>
+            @if ($product->discount != null)
+                $ {{ $product->discount }}
+                <span>${{ $product->price }}</span>
             @else
-            ${{ $product->price }}
+                ${{ $product->price }}
             @endif
 
         </div>

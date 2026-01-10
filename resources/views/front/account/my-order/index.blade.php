@@ -79,7 +79,7 @@
                             <tr>
                                 <td class="cart-pic first-row">
                                     <img style="height: 100px; padding-left: 70px;"
-                                        src="{{ $image ? asset('front/img/products/' . $image->path) : asset('front/img/no-image.png') }}"
+                                        src="{{ $image ? asset('storage/' . $image->path) : asset('front/img/no-image.png') }}"
                                         alt="">
                                 </td>
 

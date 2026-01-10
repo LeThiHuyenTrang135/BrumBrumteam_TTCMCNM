@@ -61,16 +61,17 @@
                         <label class="col-md-4 text-md-right col-form-label">Trạng thái</label>
                         <div class="col-md-8">
                             <p>
-                                @php
-    $status = $order->statusLabelAttribute ?? [
-        'badge' => 'badge-secondary',
-        'text' => 'Không xác định'
-    ];
-@endphp
 
-<span class="badge {{ $status['badge'] }}">
-    {{ $status['text'] }}
-</span>
+                                @php
+                                    $status = $order->statusLabelAttribute ?? [
+                                        'badge' => 'badge-secondary',
+                                        'text' => 'Không xác định'
+                                    ];
+                                @endphp
+
+                                <span class="badge {{ $status['badge'] }}">
+                                    {{ $status['text'] }}
+                                </span>
 
                             </p>
                         </div>

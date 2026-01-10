@@ -394,7 +394,6 @@ function addCart(productId) {
 
             /* ===== HEADER ===== */
             $('.cart-count').text(res.count);
-                
             $('.select-total h5').text('$' + res.total);
 
             /* ===== MINI CART ===== */
@@ -408,7 +407,7 @@ function addCart(productId) {
                 tbody.append(`
                     <tr data-rowid="${res.cart.rowId}">
                         <td class="si-pic">
-                            <img src="front/img/products/${res.cart.image}" style="height:70px">
+                            <img src="storage/${res.cart.options.images}" style="height:70px">
                         </td>
                         <td class="si-text">
                             <div class="product-selected">
@@ -430,6 +429,7 @@ function addCart(productId) {
         }
     });
 }
+
 function addToCart(productId, qty = 1) {
     let size = $('input[name="size"]:checked').val() || '';
     let color = $('input[name="color"]:checked').val() || '';

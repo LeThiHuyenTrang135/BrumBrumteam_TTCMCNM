@@ -15,19 +15,22 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="front/img/products/{{ $product->productImages[0]->path }}"
-                                    alt="">
+                                <img class="product-big-img" src="{{ asset('storage/' . $product->productImages[0]->path) }}"
+                                    alt="" style="width: 409px; height: 459px">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
 
-                            <div class="product-thumbs" style="display: none">
+                            <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
                                     @foreach ($product->productImages as $productImage)
                                         <div class="pt active"
-                                            data-imgbigurl="front/img/products/{{ $productImage->path }}">
-                                            <img src="front/img/products/{{ $productImage->path }}" alt="">
+                                            data-imgbigurl="{{ asset('storage/' . $productImage->path) }}">
+
+                                            <img src="{{ asset('storage/' . $productImage->path) }}"
+                                                style="width: 130px; height: 145px" alt="">
+
                                         </div>
                                     @endforeach
                                 </div>
@@ -91,6 +94,7 @@
                                     <div class="pro-qty">
                                         <input type="text" value="1" id="qty">
                                     </div>
+
 <a href="javascript:void(0);"
    class="primary-btn pd-cart add-to-cart-btn"
    data-product-id="{{ $product->id }}">

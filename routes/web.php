@@ -63,23 +63,46 @@ Route::prefix('account')->group(function () {
 });
 
 //ADMIN
+// ADMIN
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'role:admin'])
     ->group(function () {
 
+        // USER
         Route::resource('user', UserController::class);
+
+        // PRODUCT
         Route::resource('product', ProductController::class);
+        Route::delete(
+            'product/image/{imageId}',
+            [ProductController::class, 'deleteImage']
+        )->name('product.image.delete');
+
+        // PRODUCT CATEGORY
         Route::resource('product-category', ProductCategoryController::class);
+
+        // ORDER (base)
         Route::resource('order', OrderController::class)
             ->only(['index', 'show', 'destroy']);
 
-        Route::patch('order/confirm/{order}', [OrderController::class, 'confirm'])
-            ->name('order.confirm');
+        // ORDER STATUS ACTIONS
+        Route::patch(
+            'order/{order}/confirm',
+            [OrderController::class, 'confirm']
+        )->name('order.confirm');
 
-        Route::delete('product/image/{imageId}', [ProductController::class, 'deleteImage'])
-            ->name('product.image.delete');
+        Route::patch(
+            'order/{order}/delivered',
+            [OrderController::class, 'delivered']
+        )->name('order.delivered');
+
+        Route::patch(
+            'order/{order}/complete',
+            [OrderController::class, 'complete']
+        )->name('order.complete');
     });
+
 //Checkout
 
 Route::prefix('checkout')->group(function () {

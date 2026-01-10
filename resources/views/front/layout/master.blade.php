@@ -111,8 +111,11 @@
                                                 @foreach (Cart::content() as $cart)
                                                     <tr data-rowId="{{ $cart->rowId }}">
                                                         <td class="si-pic">
-                                                            <img style="height: 70px;"
-                                                                src="front/img/products/{{ $cart->options->images }}">
+                                                            <img
+                                                                src="{{ asset('storage/' . $cart->options->images) }}"
+                                                                alt="{{ $cart->name }}"
+                                                                style="width: 63px; height: 70px">
+
                                                         </td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
@@ -253,7 +256,7 @@
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img src="front/img/logo_brumbrum" height="25" alt="">
+                                <img src="front/img/logo_brumbrum.png" height="25" alt="">
                             </a>
                         </div>
                         <ul>
@@ -373,7 +376,7 @@
                         $.each(response.cart_content, function(rowId, cartItem) {
                             html += '<tr data-rowId="' + cartItem.rowId + '">';
                             html +=
-                                '<td class="si-pic"><img style="height: 70px;" src="front/img/products/' +
+                                '<td class="si-pic"><img style="height: 70px;" src="storage/' +
                                 cartItem.options.images + '"></td>';
                             html += '<td class="si-text"><div class="product-selected"><p>$' + cartItem
                                 .price + ' x ' + cartItem.qty + '</p><h6>' + cartItem.name +

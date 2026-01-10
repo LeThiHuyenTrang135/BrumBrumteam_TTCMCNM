@@ -42,7 +42,8 @@
                             @foreach ($carts as $cart)
                             <tr data-rowid="{{ $cart->rowId }}">
                                 <td class="cart-pic first-row">
-                                    <img style="height: 100px;" src="front/img/products/{{ $cart->options->images }}" alt="">
+                                    <img class="product-big-img" src="{{ asset('storage/' . $cart->options->images) }}"
+                                    alt="">
                                 </td>
                                 <td class="cart-title">
                                     <h5>{{ $cart->name }}</h5>

@@ -3,6 +3,31 @@
 @section('title', 'Home')
 
 @section('body')
+    <style>
+        .product-item .pi-pic img {
+            border-radius: 15px;
+        }
+
+        .product-large {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .product-item {
+            transition: all 0.3s;
+            border-radius: 15px;
+            padding: 10px;
+        }
+
+        .product-item:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        .primary-btn {
+            border-radius: 30px !important;
+        }
+    </style>
     <!-- Hero Section Begin-->
     <section class="hero-section">
         <div class="hero-items owl-carousel">
@@ -47,27 +72,37 @@
     <div class="banner-section spad">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="single-banner">
-                        <img src="front/img/banner-1.jpg" alt="">
+                        <img src="front/img/banner-1.jpg" alt=""
+                            style="height: 520px; object-fit: cover; border-radius: 10px;">
                         <div class="inner-text">
-                            <h4>Men's</h4>
+                            <h4>New Collection</h4>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="front/img/banner-2.jpg" alt="">
-                        <div class="inner-text">
-                            <h4>Women's</h4>
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single-banner" style="margin-bottom: 20px;">
+                                <img src="front/img/banner-2.jpg" alt=""
+                                    style="height: 250px; object-fit: cover; border-radius: 10px;">
+                                <div class="inner-text">
+                                    <h4>Women's</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="front/img/banner-3.jpg" alt="">
-                        <div class="inner-text">
-                            <h4>Kid's</h4>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single-banner">
+                                <img src="front/img/banner-3.jpg" alt=""
+                                    style="height: 250px; object-fit: cover; border-radius: 10px;">
+                                <div class="inner-text">
+                                    <h4>Kid's</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,37 +227,37 @@
         <div class="insta-item set-bg" data-setbg="front/img/insta-1.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
         <div class="insta-item set-bg" data-setbg="front/img/insta-2.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
         <div class="insta-item set-bg" data-setbg="front/img/insta-3.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
         <div class="insta-item set-bg" data-setbg="front/img/insta-4.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
         <div class="insta-item set-bg" data-setbg="front/img/insta-5.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
         <div class="insta-item set-bg" data-setbg="front/img/insta-6.jpg">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">codelean_Collection</a></h5>
+                <h5><a href="#">Brumbrum_Collection</a></h5>
             </div>
         </div>
     </div>
@@ -263,7 +298,7 @@
                         </div>
                     </div>
                 @endforeach
-                
+
             </div>
             <div class="benefit-items">
                 <div class="row">
