@@ -47,6 +47,7 @@ class Order extends Model
             1 => ['text' => 'Đang giao', 'badge' => 'badge-info'],       
             3 => ['text' => 'Đã giao', 'badge' => 'badge-success'],
             4 => ['text' => 'Đã hủy', 'badge' => 'badge-danger'],
+            7 => ['text' => 'Đã hoàn thành', 'badge' => 'badge-success'],
         ];
 
         return $statuses[$this->status]

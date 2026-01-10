@@ -73,4 +73,15 @@ Route::prefix('admin')
 
         Route::delete('product/image/{imageId}', [ProductController::class, 'deleteImage'])
             ->name('product.image.delete');
+
+        Route::patch('order/{order}/complete',
+    [OrderController::class, 'complete']
+)->name('order.complete');
+
+Route::patch('order/{order}/delivered',
+    [OrderController::class, 'delivered']
+)->name('order.delivered');
+
+
+
     });

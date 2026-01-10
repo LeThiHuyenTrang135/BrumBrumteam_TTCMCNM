@@ -58,4 +58,38 @@ public function confirm(Order $order)
     return redirect()->back()->with('notification', 'Đơn hàng đã được hủy.');
 }
 
+public function complete(Order $order)
+{
+    // Chỉ cho phép hoàn thành khi đơn đã giao
+    if ($order->status != 3) {
+        return redirect()->back()
+            ->with('error', 'Chỉ đơn hàng đã giao mới được hoàn thành!');
+    }
+
+    $order->update([
+        'status' => 7
+    ]);
+
+    return redirect()->route('admin.order.index')
+        ->with('notification', 'Đơn hàng #' . $order->id . ' đã hoàn thành ✅');
+}
+
+public function delivered(Order $order)
+{
+    // Chỉ cho phép chuyển khi đang giao
+    if ($order->status != 1) {
+        return redirect()->back()
+            ->with('error', 'Chỉ đơn hàng đang giao mới được chuyển sang đã giao!');
+    }
+
+    $order->update([
+        'status' => 3   // Đã giao
+    ]);
+
+    return redirect()->route('admin.order.index')
+        ->with('notification', 'Đơn hàng #' . $order->id . ' đã chuyển sang trạng thái ĐÃ GIAO ✅');
+}
+
+
+
 }

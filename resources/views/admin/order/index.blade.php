@@ -55,26 +55,57 @@
 
     <td class="text-center">
 
-    {{-- Xác nhận --}}
-    @if ($order->status == 2)
-        <form action="{{ route('admin.order.confirm', $order->id) }}"
-              method="POST"
-              class="d-inline">
-            @csrf
-            @method('PATCH')
-
-            <button type="submit"
-                    class="btn btn-sm btn-success"
-                    onclick="return confirm('Xác nhận đơn hàng này?')">
-                Xác nhận
-            </button>
-        </form>
-    @else
-        <button class="btn btn-sm btn-success" disabled
-                style="opacity: 0.5; cursor: not-allowed;">
+{{-- Xác nhận --}}
+@if ($order->status == 2)
+    <form action="{{ route('admin.order.confirm', $order->id) }}"
+          method="POST"
+          class="d-inline">
+        @csrf
+        @method('PATCH')
+        <button type="submit"
+                class="btn btn-sm btn-success"
+                onclick="return confirm('Xác nhận đơn hàng này?')">
             Xác nhận
         </button>
-    @endif
+    </form>
+@endif
+
+{{-- Đã giao --}}
+@if ($order->status == 1)
+    <form action="{{ route('admin.order.delivered', $order->id) }}"
+          method="POST"
+          class="d-inline">
+        @csrf
+        @method('PATCH')
+        <button type="submit"
+                class="btn btn-sm btn-info"
+                onclick="return confirm('Xác nhận đơn hàng đã giao?')">
+            Đã giao
+        </button>
+    </form>
+@endif
+
+{{-- Hoàn thành --}}
+@if ($order->status == 3)
+    <form action="{{ route('admin.order.complete', $order->id) }}"
+          method="POST"
+          class="d-inline">
+        @csrf
+        @method('PATCH')
+        <button type="submit"
+                class="btn btn-sm btn-warning"
+                onclick="return confirm('Xác nhận hoàn thành đơn hàng này?')">
+            Hoàn thành
+        </button>
+    </form>
+@elseif ($order->status == 7)
+    <button class="btn btn-sm btn-secondary" disabled>
+        Đã hoàn thành
+    </button>
+@endif
+
+
+
 
     {{-- Chi tiết --}}
     <a href="{{ route('admin.order.show', $order->id) }}"
