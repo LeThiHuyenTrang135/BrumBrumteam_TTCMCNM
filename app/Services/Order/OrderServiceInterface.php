@@ -9,4 +9,5 @@ interface OrderServiceInterface
     public function delete(int $id);
     public function updateStatus(int $id, int $status);
     public function getOrderByUserId($userId);
+    public function create(array $data);
 }

@@ -33,6 +33,7 @@
                                 <th>ID</th>
                                 <th>PRODUCTS</th>
                                 <th>TOTAL</th>
+                                <th>STATUS</th> 
                                 <th>DETAILS</th>
                             </tr>
                         </thead>
@@ -84,7 +85,7 @@
 
                                 <td class="first-row">{{ $order->id }}</td>
 
-                                <td class="cart-title first-row" style="padding-left: 180px;">
+                                <td class="cart-title first-row" style="padding-left: 60px;">
                                     <h5>
                                         {{ $detail ? $detail->product->name : 'No product' }}
 
@@ -94,7 +95,79 @@
                                     </h5>
                                 </td>
 
-                                <td class="total-price first-row">${{ number_format($total, 2) }}</td>
+                                <td class="total-price first-row" >${{ number_format($total, 2) }}</td>
+<td class="first-row">
+    @php
+        $paymentType = $order->payment_type;
+        $status = $order->status;
+    @endphp
+
+    @if ($paymentType === 'pay_later')
+
+        @switch($status)
+            @case(1)
+                <span class="badge badge-secondary">Đã đặt hàng</span>
+                @break
+
+            @case(2)
+                <span class="badge badge-warning">Chờ xác nhận</span>
+                @break
+
+            @case(3)
+                <span class="badge badge-primary">Đã xác nhận</span>
+                @break
+
+            @case(5)
+                <span class="badge badge-info">Đang xử lý</span>
+                @break
+
+            @case(6)
+                <span class="badge badge-warning">Đang vận chuyển</span>
+                @break
+
+            @case(7)
+                <span class="badge badge-success">Hoàn thành</span>
+                @break
+
+            @case(0)
+                <span class="badge badge-danger">Đã hủy</span>
+                @break
+        @endswitch
+
+
+    {{-- VNPAY / STRIPE --}}
+    @else
+
+        @switch($status)
+            @case(1)
+                <span class="badge badge-secondary">Đã đặt hàng</span>
+                @break
+
+            @case(4)
+                <span class="badge badge-success">Đã thanh toán</span>
+                @break
+
+            @case(5)
+                <span class="badge badge-info">Đang xử lý</span>
+                @break
+
+            @case(6)
+                <span class="badge badge-warning">Đang vận chuyển</span>
+                @break
+
+            @case(7)
+                <span class="badge badge-success">Hoàn thành</span>
+                @break
+
+            @case(0)
+                <span class="badge badge-danger">Đã hủy</span>
+                @break
+        @endswitch
+
+    @endif
+</td>
+
+
 
                                 <td class="first-row">
                                     <a href="/account/my-order/{{ $order->id }}" class="btn">

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\OrderDetail\OrderDetailServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
@@ -33,6 +34,9 @@ use App\Services\Order\OrderServiceInterface;
 use App\Services\Order\OrderService;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\OrderDetail\OrderDetailRepository;
+use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
+use App\Services\OrderDetail\OrderDetailService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -115,6 +119,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             OrderServiceInterface::class,
             OrderService::class
+        );
+
+        
+           //OrderDetail
+        $this->app->singleton(
+            OrderDetailRepositoryInterface::class,
+            OrderDetailRepository::class
+        );
+
+        $this->app->singleton(
+            OrderDetailServiceInterface::class,
+            OrderDetailService::class
         );
     }
 

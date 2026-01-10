@@ -33,8 +33,8 @@
                                 <th>Quantity</th>
                                 <th>Total</th>
                                 <th>
-                                    <i onclick="confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?') === true ? window.location.href='{{ route('cart.destroy') }}' : ''" 
-                                    style="cursor: pointer;" class="ti-close"></i>
+                                    <i onclick="confirm('Are you sure to delete all carts') === true ? destroyCart() : ''" 
+                                     style="cursor: pointer;" class="ti-close"></i>
                                 </th>
                             </tr>
                         </thead>
@@ -67,22 +67,17 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-                            <a href="./shop" class="primary-btn continue-shop">continue shopping</a>
-                            <a href="#" class="primary-btn up-cart">update cart</a>
+
                         </div>
                         <div class="discount-coupon">
-                            <h6>Discount Codes</h6>
-                            <form action="#" class="coupon-form">
-                                <input type="text" placeholder="Enter your codes">
-                                <button type="submit" class="site-btn coupon-btn">Apply</button>
-                            </form>
+
                         </div>
                     </div>
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="subtotal">Subtotal <span>${{ $total }}</span></li>
-                                <li class="cart-total">Total <span>${{ $subtotal }}</span></li>
+                                <li class="subtotal">Subtotal <span>${{ $subtotal }}</span></li>
+                                <li class="cart-total">Total <span>${{ $total }}</span></li>
                             </ul>
                             <a href="./checkout" class="proceed-btn">PROCEED TO CHECK OUT</a>
                         </div>
@@ -102,7 +97,7 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     // 1. Hàm xóa sản phẩm
     function removeCart(rowId) {
         if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
@@ -121,7 +116,7 @@
         }
     }
 
-    $(document).off('click', '.qtybtn');
+    // $(document).off('click', '.qtybtn');
 
     function destroyCart() {
         if (confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?')) {
@@ -156,7 +151,7 @@
             },
             success: function (response) {
                 if (response.status) {
-                    $('tr[data-rowid="' + rowId + '"] .total-price').text('$' + response.itemSubtotal);
+                    $('tr[data-rowId="' + rowId + '"] .total-price').text('$' + response.itemSubtotal);
                     $('.subtotal span').text('$' + response.subtotal);
                     $('.cart-total span').text('$' + response.total);
                     $('#cart-count').text(response.count);
@@ -169,6 +164,6 @@
             }
         });
     });
-</script>
+</script> -->
 
 @endsection

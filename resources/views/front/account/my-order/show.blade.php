@@ -1,3 +1,7 @@
+@php
+    use App\Utilities\Constant;
+@endphp
+
 @extends('front.layout.master')
 
 @section('title', 'My Order Detail')
@@ -19,6 +23,15 @@
     </div>
 </div>
 <!-- Breadcrumb section end-->
+
+{{-- ORDER STATUS TIMELINE --}}
+@if ($order->status == Constant::order_status_Cancel)
+    <div class="alert alert-danger text-center mt-4">
+        Đơn hàng đã bị hủy
+    </div>
+@else
+    @include('front.account.my-order.order-status', ['order' => $order])
+@endif
 
 <!-- My Order section begin -->
 <section class="checkout-section spad">
@@ -124,13 +137,17 @@
                                     </label>
                                 </div>
                                 <div class="pc-item">
-                                        <label for="pc-momo-atm">
-                                            Thanh toán ATM qua MoMo
-                                            <input type="radio" name="payment_type" value="momo_payment" id="pc-momo-atm"
-                                              {{ $order->payment_type == 'momo_payment' ? 'checked' : '' }}>>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
+                                    <label for="pc-stripe">
+                                        Thanh toán Stripe
+                                        <input disabled type="radio"
+                                            name="payment_type"
+                                            value="stripe"
+                                            id="pc-stripe"
+                                            {{ $order->payment_type === 'stripe' ? 'checked' : '' }}>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+
                             </div>
 
                         </div>

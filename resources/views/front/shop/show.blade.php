@@ -91,9 +91,13 @@
                                     <div class="pro-qty">
                                         <input type="text" value="1" id="qty">
                                     </div>
-                                    <a href="javascript:void(0);" 
-                                    onclick="addToCart({{ $product->id }}, $('#qty').val())" 
-                                    class="primary-btn pd-cart">Add To Cart</a>
+<a href="javascript:void(0);"
+   class="primary-btn pd-cart add-to-cart-btn"
+   data-product-id="{{ $product->id }}">
+   Add To Cart
+</a>
+
+
                                 </div>
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: {{ $product->productCategory?->name }}</li>

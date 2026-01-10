@@ -4388,3 +4388,76 @@ ol {
     transition: all 0.3s ease;
 }
 
+
+/* ORDER STATUS */
+.order-status-wrapper {
+    width: 80%;
+    margin: 90px auto 30px;
+}
+
+.order-status {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 40px 0;
+}
+
+/* Đường nền xám */
+.order-status::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+/* Đường tiến trình xanh */
+.order-status::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    height: 4px;
+    background: #28a745;
+    z-index: 2;
+    width: var(--progress-width, 0%);
+}
+
+/* Step */
+.step {
+    position: relative;
+    z-index: 3;
+    width: 20%;
+    text-align: center;
+}
+
+.step .icon {
+    width: 40px;
+    height: 40px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 16px;
+}
+
+.step.active .icon {
+    background: #28a745;
+}
+
+.step p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #999;
+}
+
+.step.active p {
+    color: #28a745;
+    font-weight: 600;
+}

@@ -36,7 +36,13 @@ public static $user_level = [
     self::user_level_host  => 'host',
     self::user_level_admin => 'admin',
     self::user_level_client => 'client',
+
+    
 ];
+    const PAYMENT_PAY_LATER = 'pay_later';
+    const PAYMENT_ONLINE    = 'online_payment';
+    const PAYMENT_STRIPE    = 'stripe';
+
 
 
 

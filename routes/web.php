@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Front\AccountController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckOutController;
+use App\Http\Controllers\Front\StripeController;
+use App\Http\Controllers\Webhook\StripeWebhookController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -18,11 +21,14 @@ Route::prefix('shop')->group(function () {
         ->name('product.comment');
 
     Route::post('product/{id}', [ShopController::class, 'postComment'])->name('shop.postComment');
+        Route::get('', [App\Http\Controllers\Front\ShopController::class, 'index']);
+
+    Route::get('category/{categoryName}', [App\Http\Controllers\Front\ShopController::class, 'category']);
 });
 
 Route::middleware(['auth'])->prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::match(['get', 'post'], 'add', [CartController::class, 'cart.add'])->name('cart.add');
+    Route::match(['get', 'post'], 'add', [CartController::class, 'add'])->name('cart.add');
     Route::get('delete', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('update', [CartController::class, 'update'])->name('cart.update');
     Route::get('destroy', [CartController::class, 'destroy'])->name('cart.destroy');
@@ -74,3 +80,28 @@ Route::prefix('admin')
         Route::delete('product/image/{imageId}', [ProductController::class, 'deleteImage'])
             ->name('product.image.delete');
     });
+//Checkout
+
+Route::prefix('checkout')->group(function () {
+    Route::get('', [App\Http\Controllers\Front\CheckOutController::class, 'index']);
+    Route::post('/', [App\Http\Controllers\Front\CheckOutController::class, 'addOrder']);
+    Route::get('/result', [App\Http\Controllers\Front\CheckOutController::class, 'result']);
+
+    Route::get('/vnPayCheck', [App\Http\Controllers\Front\CheckOutController::class, 'vnPayCheck']);
+});
+
+/// Stripe Routes
+Route::get('/stripe/index', [StripeController::class, 'index'])
+    ->name('stripe.index');
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
+
+Route::post('/stripe/checkout', [StripeController::class, 'checkout'])
+    ->name('stripe.checkout');
+
+Route::get('/stripe/success', [StripeController::class, 'success'])
+    ->name('stripe.success');
+Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+Route::post('/checkout/pay-later', [CheckOutController::class, 'addOrder'])
+    ->name('checkout.pay_later');

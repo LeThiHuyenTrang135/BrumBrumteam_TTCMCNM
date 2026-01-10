@@ -11,77 +11,101 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::content();
-        $total = Cart::total();
-        $subtotal = Cart::subtotal();
-
-        return view('front.shop.cart', compact('carts', 'total', 'subtotal'));
+        return view('front.shop.cart', [
+            'carts'    => Cart::content(),
+            'subtotal' => Cart::subtotal(2, '.', ''),
+            'total'    => Cart::total(2, '.', ''),
+        ]);
     }
 
-    public function add(Request $request)
+public function add(Request $request)
+{
+    if (!$request->ajax()) {
+        return response()->json(['status' => false], 400);
+    }
+
+    $product = Product::findOrFail($request->product_id);
+
+    $cartItem = Cart::add([
+        'id' => $product->id,
+        'name' => $product->name,
+        'qty' => (int) ($request->qty ?? 1),
+        'price' => $product->discount ?? $product->price,
+        'weight' => $product->weight ?? 0,
+        'options' => [
+            'images' => $product->productImages->first()->path ?? '',
+            'size' => $request->size ?? '',
+            'color' => $request->color ?? '',
+        ],
+    ]);
+
+    $count = Cart::count();
+    $subtotal = (float) Cart::subtotal(2, '.', '');
+    $total = (float) Cart::total(2, '.', '');
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Đã thêm thành công!',
+
+        // ✅ key chuẩn (dùng cho main.js)
+        'count' => $count,
+        'subtotal' => $subtotal,
+        'total' => $total,
+        'cart' => [
+            'rowId' => $cartItem->rowId,
+            'name' => $cartItem->name,
+            'qty' => (int) $cartItem->qty,
+            'price' => (float) $cartItem->price,
+            'image' => $cartItem->options->images ?? '',
+        ],
+
+        // ✅ key tương thích code cũ trong master.blade.php
+        'total_qty' => $count,
+        'total_price' => number_format($total, 2, '.', ''),
+        'cart_content' => Cart::content(),
+    ]);
+}
+
+    public function update(Request $request)
     {
-        if ($request->ajax()) {
-            $product = Product::find($request->product_id);
+        Cart::update($request->rowId, (int)$request->qty);
+        $cart = Cart::get($request->rowId);
 
-            Cart::add([
-                'id' => $product->id,
-                'name' => $product->name,
-                'qty' => $request->qty ?? 1,
-                'price' => $product->discount ?? $product->price,
-                'weight' => $product->weight ?? 0,
-                'options' => [
-                    'images' => $product->productImages->first()->path ?? '',
-                    'size' => $request->size ?? '',
-                    'color' => $request->color ?? '',
-                ],
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Đã thêm thành công!',
-                'total_qty' => Cart::count(),
-                'total_price' => Cart::total(),
-                'cart_content' => Cart::content(),
-            ]);
-        }
-        return back();
+        return response()->json([
+            'status' => true,
+            'cart' => [
+                'rowId' => $cart->rowId,
+                'qty' => $cart->qty,
+                'price' => $cart->price,
+                'lineTotal' => number_format($cart->price * $cart->qty, 2),
+            ],
+            'count' => Cart::count(),
+            'subtotal' => Cart::subtotal(2, '.', ''),
+            'total' => Cart::total(2, '.', ''),
+        ]);
     }
 
     public function delete(Request $request)
     {
-        if ($request->ajax()) {
-            Cart::remove($request->rowId);
+        Cart::remove($request->rowId);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Xóa thành công!',
-                'total' => Cart::total(),
-                'subtotal' => Cart::subtotal(),
-                'count' => Cart::count(),
-            ]);
-        }
-        return back();
+        return response()->json([
+            'status' => true,
+            'count' => Cart::count(),
+            'subtotal' => Cart::subtotal(2, '.', ''),
+            'total' => Cart::total(2, '.', ''),
+        ]);
     }
+
     public function destroy()
     {
         Cart::destroy();
-        return back();
-    }
 
-    public function update(Request $request)
-    {
-        if ($request->ajax()) {
-            Cart::update($request->rowId, $request->qty);
-            $cartItem = Cart::get($request->rowId);
-            $itemSubtotal = $cartItem->price * $cartItem->qty;
-
-            return response()->json([
-                'status' => true,
-                'itemSubtotal' => number_format($itemSubtotal, 2),
-                'total' => Cart::total(),
-                'subtotal' => Cart::subtotal(),
-                'count' => Cart::count(),
-            ]);
-        }
+        return response()->json([
+            'status' => true,
+            'count' => 0,
+            'subtotal' => '0.00',
+            'total' => '0.00',
+        ]);
     }
 }

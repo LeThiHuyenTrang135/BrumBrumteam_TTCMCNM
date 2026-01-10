@@ -16,6 +16,10 @@ class OrderService implements OrderServiceInterface
     {
         return Order::with('user', 'orderDetails')->latest()->get();
     }
+    public function create(array $data)
+{
+    return Order::create($data);
+}
 
     public function find(int $id)
     {

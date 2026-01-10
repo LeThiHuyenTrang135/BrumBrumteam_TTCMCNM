@@ -46,5 +46,11 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
+    
+    'stripe' => [
+        'secret' => env('STRIPE_SK'),
+        'key' => env('STRIPE_PK'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
 
 ];
