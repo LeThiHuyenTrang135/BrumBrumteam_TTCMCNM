@@ -61,8 +61,8 @@
                         <label class="col-md-4 text-md-right col-form-label">Trạng thái</label>
                         <div class="col-md-8">
                             <p>
-                                <span class="badge {{ $order->statusLabelAttribute['badge'] }}">
-                                    {{ $order->statusLabelAttribute['text'] }}
+                                <span class="badge {{ $order->statusLabel['badge'] ?? 'badge-secondary' }}">
+                                    {{ $order->statusLabel['text'] }}
                                 </span>
                             </p>
                         </div>
