@@ -14,20 +14,6 @@ class OrderController extends Controller
         return view('admin.order.index', compact('orders'));
     }
 
-//     public function confirm($id)
-// {
-//     $order = Order::findOrFail($id);
-
-//     if ($order->status == 2) {
-//         $order->status = 1; 
-//         $order->save();
-
-//         return redirect()->back()->with('notification', 'Đơn hàng đã được xác nhận và đang giao.');
-//     }
-
-//     return redirect()->back()->with('notification', 'Không thể xác nhận đơn hàng này!');
-// }
-
 public function confirm(Order $order)
 {
     if ($order->status != 2) {
