@@ -46,9 +46,8 @@ public function add(Request $request)
 
     return response()->json([
         'status' => true,
-        'message' => 'Đã thêm thành công!',
+        'message' => 'Add to cart successfully',
 
-        // ✅ key chuẩn (dùng cho main.js)
         'count' => $count,
         'subtotal' => $subtotal,
         'total' => $total,

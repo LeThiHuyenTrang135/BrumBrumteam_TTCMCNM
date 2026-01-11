@@ -174,15 +174,15 @@
                         </li>
                         <li class="{{ request()->segment(1) == 'shop' ? 'active' : '' }}"><a href="./shop">Shop</a>
                         </li>
-                        <li><a href="">Collection</a>
+                        <li><a href="#">Collection</a>
                             <ul class="dropdown">
-                                <li><a href="">Men's</a></li>
-                                <li><a href="">Women's</a></li>
-                                <li><a href="">Kid's</a></li>
+                                <li><a href="#">Men's</a></li>
+                                <li><a href="#">Women's</a></li>
+                                <li><a href="#">Kid's</a></li>
                             </ul>
                         </li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
                         <li><a href="">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./account/my-order">My Order</a></li>
