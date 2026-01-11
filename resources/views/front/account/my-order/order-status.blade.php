@@ -4,35 +4,31 @@
     $status = (int) $order->status;
     $paymentType = $order->payment_type;
 
-    // ❌ ĐÃ HỦY → không hiển thị progress
+    //ĐÃ HỦY → không hiển thị progress
     if ($status === Constant::order_status_Cancel) {
         $steps = [];
         $progressPercent = 0;
     } else {
-
         // =========================
         // VNPAY / STRIPE
         // =========================
-        if (in_array($paymentType, [
-            Constant::PAYMENT_ONLINE,
-            Constant::PAYMENT_STRIPE
-        ])) {
+        if (in_array($paymentType, [Constant::PAYMENT_ONLINE, Constant::PAYMENT_STRIPE])) {
             $steps = [
                 Constant::order_status_Pending => [
-                    'label' => 'Chờ thanh toán',
-                    'icon'  => 'fa-credit-card'
+                    'label' => 'Pending Payment',
+                    'icon' => 'fa-credit-card',
                 ],
                 Constant::order_status_Paid => [
-                    'label' => 'Đang giao',
-                    'icon'  => 'fa-truck fa-flip-horizontal'
+                    'label' => 'In Transit',
+                    'icon' => 'fa-truck fa-flip-horizontal',
                 ],
                 Constant::order_status_Shipped => [
-                    'label' => 'Đã giao',
-                    'icon'  => 'fa-check-circle'
+                    'label' => 'Delivered',
+                    'icon' => 'fa-check-circle',
                 ],
                 Constant::order_status_Completed => [
-                    'label' => 'Hoàn thành',
-                    'icon'  => 'fa-star'
+                    'label' => 'Completed',
+                    'icon' => 'fa-star',
                 ],
             ];
         }
@@ -42,20 +38,20 @@
         else {
             $steps = [
                 Constant::order_status_Confirming => [
-                    'label' => 'Đang xác nhận',
-                    'icon'  => 'fa-check-circle'
+                    'label' => 'Pending Confirmation',
+                    'icon' => 'fa-check-circle',
                 ],
                 Constant::order_status_Paid => [
-                    'label' => 'Đang giao',
-                    'icon'  => 'fa-truck fa-flip-horizontal'
+                    'label' => 'In Transit',
+                    'icon' => 'fa-truck fa-flip-horizontal',
                 ],
                 Constant::order_status_Shipped => [
-                    'label' => 'Đã giao',
-                    'icon'  => 'fa-check-circle'
+                    'label' => 'Delivered',
+                    'icon' => 'fa-check-circle',
                 ],
                 Constant::order_status_Completed => [
-                    'label' => 'Hoàn thành',
-                    'icon'  => 'fa-star'
+                    'label' => 'Completed',
+                    'icon' => 'fa-star',
                 ],
             ];
         }
@@ -63,57 +59,53 @@
         // =========================
         // TÍNH PROGRESS %
         // =========================
- $totalSteps = count($steps);
-$currentIndex = 0;
+        $totalSteps = count($steps);
+        $currentIndex = 0;
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | XÁC ĐỊNH currentIndex
 |--------------------------------------------------------------------------
 */
-if (in_array($paymentType, [
-    Constant::PAYMENT_ONLINE,
-    Constant::PAYMENT_STRIPE
-])) {
-    // Flow tăng: 0 → 1 → 3 → 7
-    $i = 0;
-    foreach (array_keys($steps) as $stepStatus) {
-        if ($status >= $stepStatus) {
-            $currentIndex = $i;
+        if (in_array($paymentType, [Constant::PAYMENT_ONLINE, Constant::PAYMENT_STRIPE])) {
+            // Flow tăng: 0 → 1 → 3 → 7
+            $i = 0;
+            foreach (array_keys($steps) as $stepStatus) {
+                if ($status >= $stepStatus) {
+                    $currentIndex = $i;
+                }
+                $i++;
+            }
+        } else {
+            // Flow không tăng: 2 → 1 → 3 → 7
+            $keys = array_keys($steps);
+            $currentIndex = array_search($status, $keys);
+            if ($currentIndex === false) {
+                $currentIndex = 0;
+            }
         }
-        $i++;
-    }
-} else {
-    // Flow không tăng: 2 → 1 → 3 → 7
-    $keys = array_keys($steps);
-    $currentIndex = array_search($status, $keys);
-    if ($currentIndex === false) {
-        $currentIndex = 0;
-    }
-}
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | TÍNH % ĐƯỜNG XANH (FIX TRIỆT ĐỂ)
 |--------------------------------------------------------------------------
 */
-if ($totalSteps <= 1) {
-    $progressPercent = 0;
-} else {
-    $stepGap = 105 / ($totalSteps - 1);
+        if ($totalSteps <= 1) {
+            $progressPercent = 0;
+        } else {
+            $stepGap = 105 / ($totalSteps - 1);
 
-    // Luôn chạm đúng tâm icon hiện tại
-    $progressPercent = $currentIndex * $stepGap;
+            // Luôn chạm đúng tâm icon hiện tại
+            $progressPercent = $currentIndex * $stepGap;
 
-    // Fix: bước đầu vẫn phải có 1 đoạn xanh nhỏ
-    if ($currentIndex === 0) {
-        $progressPercent = $stepGap * 0.2;
-    }
+            // Fix: bước đầu vẫn phải có 1 đoạn xanh nhỏ
+            if ($currentIndex === 0) {
+                $progressPercent = $stepGap * 0.2;
+            }
 
-    // Fix: không vượt icon cuối
-    $progressPercent = min($progressPercent, 100);
-}
-
+            // Fix: không vượt icon cuối
+            $progressPercent = min($progressPercent, 100);
+        }
     }
 @endphp
 
@@ -127,18 +119,18 @@ if ($totalSteps <= 1) {
 @else
     <div class="order-status-wrapper">
         <div class="order-status" style="--progress-width: {{ $progressPercent }}%;">
-@foreach ($steps as $index => $data)
-    @php
-        $isActive = array_search($index, array_keys($steps)) <= $currentIndex;
-    @endphp
+            @foreach ($steps as $index => $data)
+                @php
+                    $isActive = array_search($index, array_keys($steps)) <= $currentIndex;
+                @endphp
 
-    <div class="step {{ $isActive ? 'active' : '' }}">
-        <div class="icon">
-            <i class="fa {{ $data['icon'] }}"></i>
-        </div>
-        <p>{{ $data['label'] }}</p>
-    </div>
-@endforeach
+                <div class="step {{ $isActive ? 'active' : '' }}">
+                    <div class="icon">
+                        <i class="fa {{ $data['icon'] }}"></i>
+                    </div>
+                    <p>{{ $data['label'] }}</p>
+                </div>
+            @endforeach
 
         </div>
     </div>

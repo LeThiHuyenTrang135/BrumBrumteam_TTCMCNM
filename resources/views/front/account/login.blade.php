@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text"> <!--phan duong dan trang-->
-                        <a href="index.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a>
                         <span>Login</span>
                     </div>
                 </div>
@@ -71,7 +71,6 @@
                                         <input type="checkbox" id="save-pass" name="remember">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
                                 </div>
                             </div>
                             <button type="submit" class="site-btn login-btn">Login</button>

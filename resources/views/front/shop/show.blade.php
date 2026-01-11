@@ -46,12 +46,13 @@
                                 </div>
 
                                 <div class="pd-rating">
-
                                     @for ($i = 1; $i <= 5; $i++)
                                         @if ($i <= $product->avgRating)
                                             <i class="fa fa-star"></i>
-                                        @else
+                                        @elseif ($i - 0.5 <= $product->avgRating)
                                             <i class="fa fa-star-half-o"></i>
+                                        @else
+                                            <i class="fa fa-star-o"></i>
                                         @endif
                                     @endfor
 
@@ -61,12 +62,12 @@
                                 <div class="pd-desc">
                                     <p>{{ $product->content }}</p>
                                     @if ($product->discount != null)
-                                        <h4>{{ $product->discount }}<span>{{ $product->price }}</span></h4>
+                                        <h4>${{ $product->discount }}<span>${{ $product->price }}</span></h4>
                                     @else
-                                        <h4>{{ $product->discount }}</h4>
+                                        <h4>${{ $product->price }}</h4>
                                     @endif
                                 </div>
-
+                                
                                 <div class="pd-color">
                                     <h6>Color</h6>
                                     <div class="pd-color-choose">
@@ -95,11 +96,10 @@
                                         <input type="text" value="1" id="qty">
                                     </div>
 
-                                <a href="javascript:void(0);"
-                                onclick="addToCart({{ $product->id }}, $('#qty').val())"
-                                class="primary-btn pd-cart">
-                                Add To Cart
-                                </a>
+                                    <a href="javascript:void(0);" onclick="addToCart({{ $product->id }}, $('#qty').val())"
+                                        class="primary-btn pd-cart">
+                                        Add To Cart
+                                    </a>
 
 
                                 </div>

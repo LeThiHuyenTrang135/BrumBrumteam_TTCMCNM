@@ -1,6 +1,6 @@
 <div class="product-item item {{ $product->tag }}">
     <div class="pi-pic">
-        <img class="product-big-img" src="{{ asset('storage/' . $product->productImages[0]->path) }}" alt=""
+        <img class="product-img" src="{{ asset('storage/' . $product->productImages[0]->path) }}" alt=""
             style="width: 282px; height: 317px">
 
         @if ($product->discount != null)

@@ -58,14 +58,14 @@ class ShopController extends Controller
 
         return redirect()->back()->with('success', 'Comment added!');
     }
-     public function index(Request $request)
+    public function index(Request $request)
     {
         $categories = $this->productCategoryService->all();
         $brands = $this->brandService->all();
 
         $products = $this->productService->getProductOnIndex($request);
 
-        return view('front.shop.index', compact('products', 'categories','brands'));
+        return view('front.shop.index', compact('products', 'categories', 'brands'));
     }
 
     public function category($categoryName, Request $request)
@@ -77,5 +77,4 @@ class ShopController extends Controller
 
         return view('front.shop.index', compact('products', 'categories', 'brands'));
     }
-
 }
