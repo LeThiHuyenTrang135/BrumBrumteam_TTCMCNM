@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckOutController;
 use App\Http\Controllers\Front\StripeController;
 use App\Http\Controllers\Webhook\StripeWebhookController;
+use App\Http\Controllers\Front\ChatbotController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -61,6 +62,8 @@ Route::prefix('account')->group(function () {
     Route::get('verify-otp', [AccountController::class, 'verifyOtp'])->name('login.verify_otp');
     Route::post('check-otp', [AccountController::class, 'checkOtp'])->name('login.check_otp');
 });
+
+Route::post('/chatbot/ask', [ChatbotController::class, 'chat'])->name('chatbot.ask');
 
 //ADMIN
 // ADMIN
