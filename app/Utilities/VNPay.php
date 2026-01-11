@@ -6,10 +6,11 @@ class VNPay
 {
     public static function vnpay_create_payment(array $data): string
     {
-        $vnp_TmnCode    = "J16B037H";
-        $vnp_HashSecret = "3X32J32Q8UDQJWFYFI5HHTPNLRA5SXEZ";
-        $vnp_Url        = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl  = rtrim(env('APP_URL'), '/') . "/checkout/vnPayCheck";
+        $vnp_TmnCode    = config('services.vnpay.tmn_code');
+        $vnp_HashSecret = config('services.vnpay.hash_secret');
+        $vnp_Url        = config('services.vnpay.url');
+        
+        $vnp_Returnurl  = rtrim(config('app.url'), '/') . "/checkout/vnPayCheck";
 
         $inputData = [
             "vnp_Version"   => "2.1.0",
@@ -42,7 +43,5 @@ class VNPay
         $vnpSecureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
 
         return $vnp_Url . "?" . $query . "vnp_SecureHash=" . $vnpSecureHash;
-
-
     }
 }

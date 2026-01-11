@@ -259,11 +259,11 @@
 
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <input type="text" name="name" placeholder="Name" required>
+                                                        <input type="text" name="name" placeholder="Name" required value="{{ Auth::user()->name ?? '' }}">
                                                     </div>
 
                                                     <div class="col-lg-6">
-                                                        <input type="email" name="email" placeholder="Email"
+                                                        <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email ?? '' }}"
                                                             required>
                                                     </div>
 
