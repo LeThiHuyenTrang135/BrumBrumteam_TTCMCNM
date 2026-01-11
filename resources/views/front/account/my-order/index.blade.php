@@ -59,7 +59,7 @@
                                     @if ($orders->isEmpty())
                                         <tr>
                                             <td colspan="5" class="text-center py-4">
-                                                Bạn chưa có đơn hàng nào.
+                                                You have no orders yet.
                                             </td>
                                         </tr>
 
