@@ -92,8 +92,8 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <img src="front/img/cart-empty.png" alt="" style="height: 200px;">
-                            <h4 class="mt-4">Giỏ hàng trống!</h4>
-                            <a href="./shop" class="primary-btn mt-3">Mua sắm ngay</a>
+                            <h4 class="mt-4">Your cart is empty!</h4>
+                            <a href="./shop" class="primary-btn mt-3">Shop Now</a>
                         </div>
                     </div>
                 @endif

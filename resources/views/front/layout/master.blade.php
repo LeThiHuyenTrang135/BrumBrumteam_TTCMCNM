@@ -389,12 +389,12 @@
                 },
                 error: function(xhr) {
                     if (xhr.status === 401) {
-                        var confirmLogin = confirm("Bạn cần đăng nhập để mua hàng. Đến trang đăng nhập ngay?");
+                        var confirmLogin = confirm("You need to log in first. Log in now?");
                         if (confirmLogin) {
                             window.location.href = "{{ url('account/login') }}";
                         }
                     } else {
-                        alert('Có lỗi xảy ra, vui lòng thử lại.');
+                        alert('There was an error, please try again.');
                         console.log(xhr);
                     }
                 }

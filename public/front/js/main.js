@@ -28,8 +28,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -55,7 +55,7 @@
     /*------------------
         Product Slider
     --------------------*/
-   $(".product-slider").owlCarousel({
+    $(".product-slider").owlCarousel({
         loop: false,
         margin: 25,
         nav: true,
@@ -119,7 +119,7 @@
         autoHeight: false,
         autoplay: true,
     });
-    
+
     /*------------------
         CountDown
     --------------------*/
@@ -129,7 +129,7 @@
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    if(mm == 12) {
+    if (mm == 12) {
         mm = '01';
         yyyy = yyyy + 1;
     } else {
@@ -140,135 +140,145 @@
     // For demo preview end
 
     console.log(timerdate);
-    
+
 
     // Use this for real timer date
     /* var timerdate = "2020/01/01"; */
 
-	$("#countdown").countdown(timerdate, function(event) {
+    $("#countdown").countdown(timerdate, function (event) {
         $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
     });
 
-        
+
     /*----------------------------------------------------
      Language Flag js 
     ----------------------------------------------------*/
-    $(document).ready(function(e) {
-    //no use
-    try {
-        var pages = $("#pages").msDropdown({on:{change:function(data, ui) {
-            var val = data.value;
-            if(val!="")
-                window.location = val;
-        }}}).data("dd");
+    $(document).ready(function (e) {
+        //no use
+        try {
+            var pages = $("#pages").msDropdown({
+                on: {
+                    change: function (data, ui) {
+                        var val = data.value;
+                        if (val != "")
+                            window.location = val;
+                    }
+                }
+            }).data("dd");
 
-        var pagename = document.location.pathname.toString();
-        pagename = pagename.split("/");
-        pages.setIndexByValue(pagename[pagename.length-1]);
+            var pagename = document.location.pathname.toString();
+            pagename = pagename.split("/");
+            pages.setIndexByValue(pagename[pagename.length - 1]);
+            $("#ver").html(msBeautify.version.msDropdown);
+        } catch (e) {
+            // console.log(e);
+        }
         $("#ver").html(msBeautify.version.msDropdown);
-    } catch(e) {
-        // console.log(e);
-    }
-    $("#ver").html(msBeautify.version.msDropdown);
 
-    //convert
-    $(".language_drop").msDropdown({roundedBorder:false});
+        //convert
+        $(".language_drop").msDropdown({ roundedBorder: false });
         $("#tech").data("dd");
     });
     /*-------------------
-		Range Slider
-	--------------------- */
-	var rangeSlider = $(".price-range"),
-		minamount = $("#minamount"),
-		maxamount = $("#maxamount");
-		
-        // Lấy dữ liệu từ data-* attribute
-        let minVal = parseInt(rangeSlider.data("min-value"));
-        let maxVal = parseInt(rangeSlider.data("max-value"));
+        Range Slider
+    --------------------- */
+    var rangeSlider = $(".price-range"),
+        minamount = $("#minamount"),
+        maxamount = $("#maxamount");
 
-        let minPrice = parseInt(rangeSlider.data("min"));
-        let maxPrice = parseInt(rangeSlider.data("max"));
+    // Lấy dữ liệu từ data-* attribute
+    let minVal = parseInt(rangeSlider.data("min-value"));
+    let maxVal = parseInt(rangeSlider.data("max-value"));
 
-        // Nếu NaN → trả về mặc định
-        if (isNaN(minVal)) minVal = minPrice;
-        if (isNaN(maxVal)) maxVal = maxPrice;
+    let minPrice = parseInt(rangeSlider.data("min"));
+    let maxPrice = parseInt(rangeSlider.data("max"));
 
-	    rangeSlider.slider({
-		range: true,
-		min: minPrice,
+    // Nếu NaN → trả về mặc định
+    if (isNaN(minVal)) minVal = minPrice;
+    if (isNaN(maxVal)) maxVal = maxPrice;
+
+    rangeSlider.slider({
+        range: true,
+        min: minPrice,
         max: maxPrice,
-		values: [minVal, maxVal],
-		slide: function (event, ui) {
-			minamount.val("$" + ui.values[0]);
+        values: [minVal, maxVal],
+        slide: function (event, ui) {
+            minamount.val("$" + ui.values[0]);
             maxamount.val("$" + ui.values[1]);
-                }
-            });
-        minamount.val("$" + minVal);
-        maxamount.val("$" + maxVal);
+        }
+    });
+    minamount.val("$" + minVal);
+    maxamount.val("$" + maxVal);
 
     /*-------------------
-		Radio Btn
-	--------------------- */
+        Radio Btn
+    --------------------- */
     $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").on('click', function () {
         $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
         $(this).addClass('active');
     });
-    
+
     /*-------------------
-		Nice Select
+        Nice Select
     --------------------- */
     $('.sorting, .p-show').niceSelect();
 
     /*------------------
-		Single Product
-	--------------------*/
-	$('.product-thumbs-track .pt').on('click', function(){
-		$('.product-thumbs-track .pt').removeClass('active');
-		$(this).addClass('active');
-		var imgurl = $(this).data('imgbigurl');
-		var bigImg = $('.product-big-img').attr('src');
-		if(imgurl != bigImg) {
-			$('.product-big-img').attr({src: imgurl});
-			$('.zoomImg').attr({src: imgurl});
-		}
-	});
+        Single Product
+    --------------------*/
+    $('.product-thumbs-track .pt').on('click', function () {
+        $('.product-thumbs-track .pt').removeClass('active');
+        $(this).addClass('active');
+        var imgurl = $(this).data('imgbigurl');
+        var bigImg = $('.product-big-img').attr('src');
+        if (imgurl != bigImg) {
+            $('.product-big-img').attr({ src: imgurl });
+            $('.zoomImg').attr({ src: imgurl });
+        }
+    });
 
     $('.product-pic-zoom').zoom();
-    
+
     /*-------------------
-		Quantity change
-	--------------------- */
+        Quantity change
+    --------------------- */
     var proQty = $('.pro-qty');
-	proQty.prepend('<span class="dec qtybtn">-</span>');
-	proQty.append('<span class="inc qtybtn">+</span>');
-	proQty.on('click', '.qtybtn', function () {
-		var $button = $(this);
-		var oldValue = $button.parent().find('input').val();
-		if ($button.hasClass('inc')) {
-			var newVal = parseFloat(oldValue) + 1;
-		} else {
-			// Don't allow decrementing below zero
-			if (oldValue > 0) {
-				var newVal = parseFloat(oldValue) - 1;
-			} else {
-				newVal = 0;
-			}
-		}
-		$button.parent().find('input').val(newVal);
+    proQty.prepend('<span class="dec qtybtn">-</span>');
+    proQty.append('<span class="inc qtybtn">+</span>');
 
-        //update cart
-        var rowId = $button.parent().find('input').data('rowid');
-        updateCart(rowId, newVal);
-	});
+    proQty.on('click', '.qtybtn', function () {
+        var $button = $(this);
+        var $input = $button.parent().find('input');
+        var oldValue = parseFloat($input.val());
+        var rowId = $input.data('rowid');
+        var newVal = oldValue;
 
-  /*-------------------
-		Bo loc san pham ơ trang chu
-	--------------------- */
+        if ($button.hasClass('inc')) {
+            newVal = oldValue + 1;
+        } else {
+            if (oldValue > 1) {
+                newVal = oldValue - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+
+        if (newVal === 0) {
+            removeCart(rowId);
+        } else {
+            $input.val(newVal);
+            updateCart(rowId, newVal);
+        }
+    });
+
+    /*-------------------
+          Bo loc san pham ơ trang chu
+      --------------------- */
 
     const product_men = $(".product-slider.men");
     const product_women = $(".product-slider.women");
 
-    $('.filter-control').on('click', '.item', function(){
+    $('.filter-control').on('click', '.item', function () {
         const $item = $(this);
         const filter = $item.data('tag');
         const category = $item.data('category');
@@ -276,113 +286,19 @@
         $item.siblings().removeClass('active');
         $item.addClass('active');
 
-        if (category === 'men'){
+        if (category === 'men') {
             product_men.owlcarousel2_filter(filter);
         }
 
-        if (category === 'women'){
+        if (category === 'women') {
             product_women.owlcarousel2_filter(filter);
         }
     });
 
-   
+
 
 })(jQuery);
 
-// function addCart(productId) {
-//     $.ajax({
-//         type: "GET",
-//         url: "cart/add",
-//         data: {productId: productId},
-//         success: function(response){
-            
-//             $('.cart-count').text(response['count']);
-//             $('.cart-price').text(response['total']);
-//             $('.select-total h5').text(response['total']);
-
-//             var cartHover_tbody = $('.select-items tbody');
-//             var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + response['cart'].rowId + "']");
-
-//             if (cartHover_existItem.length){
-//                 cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
-//             }else{
-//                var newItem = 
-//                 '<tr data-rowId="' + response['cart'].rowId + '">\n' +
-//                 '    <td class="si-pic">\n' +
-//                 '        <img style="height: 70px;"\n' +
-//                 '        src="front/img/products/' + response['cart'].options.images + '">\n' +
-//                 '    </td>\n' +
-//                 '    <td class="si-text">\n' +
-//                 '        <div class="product-selected">\n' +
-//                 '            <p>$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty + '</p>\n' +
-//                 '            <h6>' + response['cart'].name + '</h6>\n' +
-//                 '        </div>\n' +
-//                 '    </td>\n' +
-//                 '    <td class="si-close">\n' +
-//                 '        <i onclick="removeCart(\'' + response['cart'].rowId + '\')" class="ti-close"></i>\n' +
-//                 '    </td>\n' +  
-//                 '</tr>';
-
-
-//                 cartHover_tbody.append(newItem);
-//             }
-
-//             //hien thi tbao thanh cong
-//             alert('Add successful:\nProducts: ' + response['cart'].name)
-//             console.log(response);
-//         },
-//         error: function(response) {
-//             //hien thi tbao that bai
-//             alert('Add failed.')
-//             console.log(response);
-//         },
-//     })
-// }
-
-
-// function removeCart(rowId){
-//     $.ajax({
-//         type: "GET",
-//         url: "cart/delete",
-//         data: {rowId: rowId},
-//         success: function(response){
-//             //Xu ly phan cart hover (trang master-page)
-//             $('.cart-count').text(response['count']);
-//             $('.cart-price').text(response['total']);
-//             $('.select-total h5').text(response['total']);
-
-//             var cartHover_tbody = $('.select-items tbody');
-//             var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + rowId + "']");
-
-//             // ================== HIỆU ỨNG MINI CART ==================
-//             cartHover_existItem.addClass('row-removing');
-//             setTimeout(function () {
-//                 cartHover_existItem.remove();
-//             }, 300); // 300ms trùng với CSS transition
-            
-
-//             // xu ly o trong trang "shop/cart"
-//             var cart_tbody = $('.cart-table tbody');
-//             var cart_exisItem = cart_tbody.find("tr[data-rowId='" + rowId + "']");
-
-//             // ================== HIỆU ỨNG TRANG CART ==================
-//             cart_exisItem.addClass('row-removing');
-//             setTimeout(function () {
-//                 cart_exisItem.remove();
-//             }, 300);
-            
-
-//             //hien thi tbao thanh cong
-//             alert('Delete successful:\nProducts: ' + response['cart'].name)
-//             console.log(response);
-//         },
-//         error: function(response) {
-//             //hien thi tbao that bai
-//             alert('Delete failed.')
-//             console.log(response);
-//         },
-//     })
-// }
 function addCart(productId) {
     $.ajax({
         type: "GET",
@@ -481,38 +397,43 @@ function reloadMiniCart() {
     });
 }
 
+function removeCart(rowId) {
+    var check = confirm("Are you sure you want to remove this item from the cart?");
 
+    if (check) {
+        $.ajax({
+            type: "GET",
+            url: "/cart/delete",
+            data: { rowId: rowId },
+            success: function (res) {
+                if (!res.status) return;
 
-function removeCart(rowId){
-    $.ajax({
-        type: "GET",
-        url: "/cart/delete",
-        data: { rowId },
-        success: function(res){
+                $('.cart-count').text(res.count);
+                $('.cart-price').text('$' + res.total);
+                $('.select-total h5').text('$' + res.total);
 
-            if (!res.status) return;
+                var $row = $('.cart-table tbody').find("tr[data-rowid='" + rowId + "']");
 
-            // MINI CART
-            $('.cart-count').text(res.count);
-            $('.cart-price').text('$' + res.total);
-            $('.select-total h5').text('$' + res.total);
+                $row.fadeOut(300, function () {
+                    $(this).remove();
+                });
 
-            // CART PAGE
-            $('.cart-table tbody')
-                .find("tr[data-rowid='" + rowId + "']")
-                .remove();
-
-            $('.subtotal span').text('$' + res.subtotal);
-            $('.cart-total span').text('$' + res.total);
-        }
-    });
+                $('.subtotal span').text('$' + res.subtotal);
+                $('.cart-total span').text('$' + res.total);
+            },
+            error: function (e) {
+                console.log(e);
+                alert("There was an error, please try again!");
+            }
+        });
+    }
 }
 
 function destroyCart() {
     $.ajax({
         type: "GET",
-        url: "cart/destroy", 
-        data:{},
+        url: "cart/destroy",
+        data: {},
         success: function (response) {
 
             // Cập nhật phần cart ở header
@@ -528,7 +449,7 @@ function destroyCart() {
                 $('.cart-table tbody').empty();
             }, 300);
 
-         
+
         },
         error: function (response) {
             alert('Delete all failed.');
@@ -553,7 +474,7 @@ function updateCart(rowId, qty) {
 
             if (row.length) {
                 row.find('.total-price')
-                   .text('$' + res.cart.lineTotal);
+                    .text('$' + res.cart.lineTotal);
             }
 
             $('.subtotal span').text('$' + res.subtotal);
@@ -581,11 +502,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (payment === 'momo_atm') {
             form.action = "/checkout/momo";
             form.method = "POST";
-        } 
+        }
         else if (payment === 'stripe') {
             form.action = "/stripe/checkout";
             form.method = "POST";
-        } 
+        }
         else {
             form.action = "/checkout";
             form.method = "POST";
