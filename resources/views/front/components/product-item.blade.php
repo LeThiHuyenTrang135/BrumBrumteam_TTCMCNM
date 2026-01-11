@@ -1,6 +1,6 @@
 <div class="product-item item {{ $product->tag }}">
     <div class="pi-pic">
-         <img src="front/img/products/{{ $product->productImages[0]->path }}" alt=""
+        <img src="front/img/products/{{ $product->productImages[0]->path }}" alt=""
         alt=""
         style="width: 282px; height: 317px">
 
