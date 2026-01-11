@@ -21,9 +21,9 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
-                        <h2>Đăng nhập bằng SĐT</h2>
+                        <h2>Login via SMS</h2>
 
-                        @if(session('notification'))
+                        @if (session('notification'))
                             <div class="alert alert-warning" role="alert">
                                 {{ session('notification') }}
                             </div>
@@ -32,22 +32,23 @@
                         <form action="{{ route('login.send_otp') }}" method="post">
                             @csrf
                             <div class="group-input">
-                                <label for="phone">Số điện thoại *</label>
-                                <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại của bạn" required>
+                                <label for="phone">Phone number *</label>
+                                <input type="text" id="phone" name="phone" placeholder="Phone number" required>
                                 @error('phone')
-                                    <span class="text-danger" style="color: red; font-size: 14px; margin-top: 5px; display: block;">{{ $message }}</span>
+                                    <span class="text-danger"
+                                        style="color: red; font-size: 14px; margin-top: 5px; display: block;">{{ $message }}</span>
                                 @enderror
                             </div>
-                            
-                            <button type="submit" class="site-btn login-btn">Gửi mã OTP</button>
+
+                            <button type="submit" class="site-btn login-btn">Send OTP</button>
                         </form>
-                        
+
                         <div class="switch-login">
-                            <a href="./account/login" class="or-login">Quay lại Đăng nhập thường</a>
+                            <a href="./account/login" class="or-login">Back</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+@endsection

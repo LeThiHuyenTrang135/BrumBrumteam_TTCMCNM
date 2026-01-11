@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="pc-item">
                                         <label for="pc-stripe">
-                                            Thanh toán Stripe
+                                            Pay via Stripe
                                             <input type="radio" name="payment_type" value="stripe" id="pc-stripe">
                                             <span class="checkmark"></span>
                                         </label>

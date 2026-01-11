@@ -8,157 +8,211 @@
 
 @section('body')
 
-<!-- Breadcrumb section begin-->
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-text">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="/"> My Order</a>
-                    <span>Details</span>
+    <!-- Breadcrumb section begin-->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="/"> My Order</a>
+                        <span>Details</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Breadcrumb section end-->
+    <!-- Breadcrumb section end-->
 
-{{-- ORDER STATUS TIMELINE --}}
-@if ($order->status == Constant::order_status_Cancel)
-    <div class="alert alert-danger text-center mt-4">
-        Đơn hàng đã bị hủy
-    </div>
-@else
-    @include('front.account.my-order.order-status', ['order' => $order])
-@endif
+    {{-- ORDER STATUS TIMELINE --}}
+    @if ($order->status == Constant::order_status_Cancel)
+        <div class="alert alert-danger text-center mt-4">
+            Order has been cancelled
+        </div>
+    @else
+        @include('front.account.my-order.order-status', ['order' => $order])
+    @endif
 
-<!-- My Order section begin -->
-<section class="checkout-section spad">
-    <div class="container">
-       <form action="#" class="checkout-form">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="checkout-content">
-                        <a href="#" class="content-btn">
-                            Order ID:
-                            <b>{{ $order->id }}</b>
+    <!-- My Order section begin -->
+    <section class="checkout-section spad">
+        <div class="container">
+            <form action="#" class="checkout-form">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkout-content">
+                            <a href="#" class="content-btn">
+                                Order ID:
+                                <b>{{ $order->id }}</b>
 
-                        </a>
+                            </a>
 
+                        </div>
+                        <h4>Biling Details</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="fir">First Name</label>
+                                <input disabled type="text" id="fir" value="{{ $order->first_name }}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="last">Last Name</label>
+                                <input disabled type="text" id="last" value="{{ $order->last_name }}">
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label for="cun-name">Company Name</label>
+                                <input disabled type="text" id="cun-name" value="{{ $order->company_name }}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="cun">Country</label>
+                                <input disabled type="text" id="cun" value="{{ $order->country }}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="street">Street Address</label>
+                                <input disabled type="text" id="street" class="street-first"
+                                    value="{{ $order->street_address }}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="zip">Postcode / ZIP (optional)</label>
+                                <input disabled type="text" id="zip" value="{{ $order->postcode_zip }}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="town">Town / City</label>
+                                <input disabled type="text" id="town" value="{{ $order->town_city }}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="email">Email Address</label>
+                                <input disabled type="text" id="email" value="{{ $order->email }}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="phone">Phone</label>
+                                <input disabled type="text" id="phone" value="{{ $order->phone }}">
+                            </div>
+
+
+
+                        </div>
                     </div>
-                    <h4>Biling Details</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label for="fir">First Name</label>
-                            <input disabled type="text" id="fir" value="{{ $order->first_name }}">
-                        </div>
-                         <div class="col-lg-6">
-                            <label for="last">Last Name</label>
-                            <input disabled type="text" id="last" value="{{ $order->last_name }}">
-                        </div>
+                    <div class="col-lg-6">
+                        <div class="checkout-content">
+                            <a href="#" class="content-btn">
+                                Status:
+                                @php
+                                    $paymentType = $order->payment_type;
+                                    $status = (int) $order->status;
+                                @endphp
 
-                         <div class="col-lg-12">
-                            <label for="cun-name">Company Name</label>
-                            <input disabled type="text" id="cun-name" value="{{ $order->company_name }}">
-                        </div>
-                         <div class="col-lg-12">
-                            <label for="cun">Country</label>
-                            <input disabled type="text" id="cun" value="{{ $order->country }}">
-                        </div>
-                         <div class="col-lg-12">
-                            <label for="street">Street Address</label>
-                            <input disabled type="text" id="street" class="street-first" value="{{ $order->street_address }}">
-                        </div>
-                         <div class="col-lg-12">
-                            <label for="zip">Postcode / ZIP (optional)</label>
-                            <input disabled type="text" id="zip" value="{{ $order->postcode_zip }}">
-                        </div>
-                         <div class="col-lg-12">
-                            <label for="town">Town / City</label>
-                            <input disabled type="text" id="town" value="{{ $order->town_city }}">
-                        </div>
-                         <div class="col-lg-6">
-                            <label for="email">Email Address</label>
-                            <input disabled type="text" id="email" value="{{ $order->email }}">
-                        </div>
-                         <div class="col-lg-6">
-                            <label for="phone">Phone</label>
-                            <input disabled type="text" id="phone" value="{{ $order->phone }}">
-                        </div>
+                                @if ($paymentType === 'pay_later')
+                                    @switch($status)
+                                        @case(2)
+                                            <b>Pending Confirmation</b>
+                                        @break
 
+                                        @case(1)
+                                            <b>In Transit</b>
+                                        @break
+
+                                        @case(3)
+                                            <b>Delivered</b>
+                                        @break
+
+                                        @case(7)
+                                            <b>Completed</b>
+                                        @break
+
+                                        @case(4)
+                                            <b>Cancelled</b>
+                                        @break
+
+                                        @default
+                                            <b>Unidentified</b>
+                                    @endswitch
+                                @else
+                                    @switch($status)
+                                        @case(0)
+                                            <b>Pending Payment</b>
+                                        @break
+
+                                        @case(1)
+                                            <b>In Transit</b>
+                                        @break
+
+                                        @case(3)
+                                            <b>Delivered</b>
+                                        @break
+
+                                        @case(7)
+                                            <b>Completed</b>
+                                        @break
+
+                                        @case(4)
+                                            <b>Cancelled</b>
+                                        @break
+
+                                        @default
+                                            <b>Unidentified</b>
+                                    @endswitch
+                                @endif
+                            </a>
+                        </div>
                         
+                        <div class="place-order">
+                            <h4>Your Order</h4>
+                            <div class="order-total">
+                                <ul class="order-table">
+                                    <li>Product <span>Total</span></li>
 
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="checkout-content">
-                        <a href="#" class="content-btn">
-                            Status:
-                           <b>{{ $order->status_label['text'] }}</b>
+                                    @foreach ($order->orderDetails as $orderDetail)
+                                        <li class="fw-normal">
+                                            {{ $orderDetail->product->name }} x {{ $orderDetail->qty }}
+                                            <span>${{ $orderDetail->total }}</span>
 
-                        </a>
-                    </div>
-                    <div class="place-order">
-                        <h4>Your Order</h4>
-                        <div class="order-total">
-                            <ul class="order-table">
-                                <li>Product <span>Total</span></li>
+                                        </li>
+                                    @endforeach
 
-                                @foreach ($order->orderDetails as $orderDetail)
-                                    <li class="fw-normal">
-                                        {{ $orderDetail->product->name }} x {{ $orderDetail->qty }}
-                                        <span>${{ $orderDetail->total }}</span>
+                                    <li class="total-price">
+                                        Total
+                                        <span>${{ array_sum(array_column($order->orderDetails->toArray(), 'total')) }}</span>
 
                                     </li>
-                                @endforeach
+                                </ul>
+                                <div class="payment-check">
+                                    <div class="pc-item">
+                                        <label for="pc-check">
+                                            Pay Later
+                                            <input disabled type="radio" name="payment-type" value="pay_later"
+                                                id="pc-check" {{ $order->payment_type == 'pay_later' ? 'checked' : '' }}>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
 
-                                <li class="total-price">
-                                    Total
-                                    <span>${{ array_sum(array_column($order->orderDetails->toArray(), 'total')) }}</span>
+                                    <div class="pc-item">
+                                        <label for="pc-paypal">
+                                            Online payment
+                                            <input disabled type="radio" name="payment-type" value="online_payment"
+                                                id="pc-paypal"
+                                                {{ $order->payment_type == 'online_payment' ? 'checked' : '' }}>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="pc-item">
+                                        <label for="pc-stripe">
+                                            Pay via Stripe
+                                            <input disabled type="radio" name="payment_type" value="stripe" id="pc-stripe"
+                                                {{ $order->payment_type === 'stripe' ? 'checked' : '' }}>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
 
-                                </li>
-                            </ul>
-                            <div class="payment-check">
-                                <div class="pc-item">
-                                    <label for="pc-check">
-                                        Pay Later
-                                        <input disabled type="radio" name="payment-type" value="pay_later" id="pc-check"
-                                        {{ $order->payment_type == 'pay_later' ? 'checked' : '' }}>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="pc-item">
-                                    <label for="pc-paypal">
-                                        Online payment
-                                        <input disabled type="radio" name="payment-type" value="online_payment" id="pc-paypal"
-                                        {{ $order->payment_type == 'online_payment' ? 'checked' : '' }}>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="pc-item">
-                                    <label for="pc-stripe">
-                                        Thanh toán Stripe
-                                        <input disabled type="radio"
-                                            name="payment_type"
-                                            value="stripe"
-                                            id="pc-stripe"
-                                            {{ $order->payment_type === 'stripe' ? 'checked' : '' }}>
-                                        <span class="checkmark"></span>
-                                    </label>
                                 </div>
 
                             </div>
 
                         </div>
-
                     </div>
                 </div>
-            </div>
-       </form>
-    </div>
-</section>
-<!-- My Order section end -->
+            </form>
+        </div>
+    </section>
+    <!-- My Order section end -->
 
 @endsection

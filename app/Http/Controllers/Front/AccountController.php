@@ -86,7 +86,7 @@ class AccountController extends Controller
 
         Auth::logout();
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     public function Register()
