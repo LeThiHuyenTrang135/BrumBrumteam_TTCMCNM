@@ -67,29 +67,6 @@
                                         <h4>${{ $product->price }}</h4>
                                     @endif
                                 </div>
-                                
-                                <div class="pd-color">
-                                    <h6>Color</h6>
-                                    <div class="pd-color-choose">
-                                        @foreach (array_unique(array_column($product->productDetails->toArray(), 'color')) as $productColor)
-                                            <div class="cc-item">
-                                                <input type="radio" id="cc-{{ $productColor }}">
-                                                <label for="cc-{{ $productColor }}"
-                                                    class="cc-{{ $productColor }}"></label>
-                                            </div>
-                                        @endforeach
-
-                                    </div>
-                                </div>
-
-                                <div class="pd-size-choose">
-                                    @foreach (array_unique(array_column($product->productDetails->toArray(), 'size')) as $productSize)
-                                        <div class="sc-item">
-                                            <input type="radio" id="sm--{{ $productSize }}">
-                                            <label for="sm--{{ $productSize }}">{{ $productSize }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
 
                                 <div class="quantity">
                                     <div class="pro-qty">
@@ -108,7 +85,6 @@
                                     <li><span>TAGS</span>: {{ $product->tag }}</li>
                                 </ul>
                                 <div class="pd-share">
-                                    <div class="p-code">Sku : {{ $product->sku }}</div>
                                     <div class="pd-social">
                                         <a href="#"><i class="ti-facebook"></i></a>
                                         <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -184,35 +160,6 @@
                                                     <div class="p-weight">{{ $product->weight }}kg</div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td class="p-catagory">Size</td>
-                                                <td>
-                                                    <div class="p-size">
-                                                        @foreach (array_unique(array_column($product->productDetails->toArray(), 'size')) as $productSize)
-                                                            {{ $productSize }}
-                                                        @endforeach
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-catagory">Color</td>
-                                                <td>
-                                                    <div class="spec-color">
-                                                        @foreach (array_unique(array_column($product->productDetails->toArray(), 'color')) as $productColor)
-                                                            <div class="spec-color-item spec-{{ $productColor }}"></div>
-                                                        @endforeach
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-catagory">Sku</td>
-                                                <td>
-                                                    <div class="p-code">{{ $product->sku }}</div>
-                                                </td>
-                                            </tr>
-
                                         </table>
                                     </div>
                                 </div>
@@ -259,12 +206,13 @@
 
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <input type="text" name="name" placeholder="Name" required value="{{ Auth::user()->name ?? '' }}">
+                                                        <input type="text" name="name" placeholder="Name" required
+                                                            value="{{ Auth::user()->name ?? '' }}">
                                                     </div>
 
                                                     <div class="col-lg-6">
-                                                        <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email ?? '' }}"
-                                                            required>
+                                                        <input type="email" name="email" placeholder="Email"
+                                                            value="{{ Auth::user()->email ?? '' }}" required>
                                                     </div>
 
                                                     <div class="col-lg-12">
