@@ -15,13 +15,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::with(['category', 'brand']);
-        
+
         if ($request->has('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-        
+
         $products = $query->latest()->get();
-        
+
         return view('admin.product.index', compact('products'));
     }
 
@@ -42,12 +42,14 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
             'qty' => 'required|integer|min:0',
             'weight' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
             'product_category_id' => 'required|exists:product_categories,id',
             'featured' => 'nullable|boolean',
+            'tag' => 'required|string',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
             'images.*.required' => 'Vui lòng chọn ít nhất 1 ảnh sản phẩm',
@@ -60,13 +62,19 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             $data = $request->only([
-                'name', 'price', 'qty', 'weight', 'description', 
-                'content', 'product_category_id', 'featured'
+                'name',
+                'price',
+                'qty',
+                'discount',
+                'tag',
+                'weight',
+                'description',
+                'content',
+                'product_category_id',
+                'featured'
             ]);
-            
+
             $data['sku'] = null;
-            $data['discount'] = null;
-            $data['tag'] = null;
             $data['brand_id'] = null;
             $data['featured'] = $request->has('featured') ? 1 : 0;
 
@@ -80,8 +88,7 @@ class ProductController extends Controller
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path' => $path
-]);
-
+                    ]);
                 }
             }
 
@@ -89,7 +96,6 @@ class ProductController extends Controller
 
             return redirect()->route('admin.product.show', $product->id)
                 ->with('notification', 'Sản phẩm đã được tạo thành công!');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()
@@ -109,7 +115,9 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
             'qty' => 'required|integer|min:0',
+            'tag' => 'required|string',
             'weight' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
@@ -122,10 +130,17 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             $data = $request->only([
-                'name', 'price', 'qty', 'weight', 'description', 
-                'content', 'product_category_id'
+                'name',
+                'price',
+                'qty',
+                'discount',
+                'weight',
+                'tag',
+                'description',
+                'content',
+                'product_category_id'
             ]);
-            
+
             $data['featured'] = $request->has('featured') ? 1 : 0;
 
             $product->update($data);
@@ -133,7 +148,7 @@ class ProductController extends Controller
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('products', 'public');
-                    
+
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path' => $path
@@ -145,7 +160,6 @@ class ProductController extends Controller
 
             return redirect()->route('admin.product.show', $product->id)
                 ->with('notification', 'Sản phẩm đã được cập nhật thành công!');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()
@@ -170,7 +184,6 @@ class ProductController extends Controller
 
             return redirect()->route('admin.product.index')
                 ->with('notification', 'Sản phẩm đã được xóa thành công!');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
@@ -181,16 +194,15 @@ class ProductController extends Controller
     {
         try {
             $image = ProductImage::findOrFail($imageId);
-            
+
             Storage::disk('public')->delete($image->path);
-            
+
             $image->delete();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Ảnh đã được xóa thành công!'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

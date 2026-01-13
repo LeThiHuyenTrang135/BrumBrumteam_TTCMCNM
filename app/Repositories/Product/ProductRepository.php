@@ -28,7 +28,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function getFeaturedProductsByCategory(int $categoryId)
     {
         return $this->model
-            ->with(['productImages', 'productCategory']) // <<< thêm dòng này
+            ->with(['productImages', 'productCategory']) 
             ->where('featured', true)
             ->where('product_category_id', $categoryId)
             ->get();

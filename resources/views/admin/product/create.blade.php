@@ -76,6 +76,28 @@
                             </div>
 
                             <div class="position-relative row form-group">
+                                <label for="tag" class="col-md-3 text-md-right col-form-label">
+                                    Tag <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-9 col-xl-8">
+                                    <select class="form-control @error('tag') is-invalid @enderror" id="tag"
+                                        name="tag" required>
+                                        <option value="" selected disabled>-- Chọn tag --</option>
+                                        <option value="Clothing">Clothing
+                                        </option>
+                                        <option value="HandBag">HandBag
+                                        </option>
+                                        <option value="Shoes">Shoes</option>
+                                        <option value="Accessories"> Accessories</option>
+
+                                    </select>
+                                    @error('tag')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="position-relative row form-group">
                                 <label for="price" class="col-md-3 text-md-right col-form-label">
                                     Giá <span class="text-danger">*</span>
                                 </label>
@@ -83,6 +105,23 @@
                                     <input type="number" step="0.01"
                                         class="form-control @error('price') is-invalid @enderror" id="price"
                                         name="price" value="{{ old('price') }}" required>
+                                    @error('price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="position-relative row form-group">
+                                <label for="discount" class="col-md-3 text-md-right col-form-label">
+                                    Giảm giá
+                                </label>
+                                <div class="col-md-9 col-xl-8">
+                                    <input type="number" step="0.01"
+                                        class="form-control @error('discount') is-invalid @enderror" id="discount"
+                                        name="discount" value="{{ old('discount') }}">
+                                    @error('discount')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                     @error('price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -141,8 +180,9 @@
                                     Hình ảnh <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-md-9 col-xl-8">
-                                    <input type="file" class="form-control-file @error('images.*') is-invalid @enderror"
-                                        id="images" name="images[]" multiple accept="image/*" required
+                                    <input type="file"
+                                        class="form-control-file @error('images.*') is-invalid @enderror" id="images"
+                                        name="images[]" multiple accept="image/*" required
                                         onchange="previewImages(event)">
                                     <small class="form-text text-muted">Chọn nhiều ảnh (JPEG, PNG, JPG, GIF - Max
                                         2MB/ảnh)</small>
