@@ -76,6 +76,28 @@
                             </div>
 
                             <div class="position-relative row form-group">
+                                <label for="tag" class="col-md-3 text-md-right col-form-label">
+                                    Tag <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-9 col-xl-8">
+                                    <select class="form-control @error('tag') is-invalid @enderror" id="tag"
+                                        name="tag" required>
+                                        <option value="" selected disabled>-- Chọn tag --</option>
+                                        <option value="Clothing">Clothing
+                                        </option>
+                                        <option value="HandBag">HandBag
+                                        </option>
+                                        <option value="Shoes">Shoes</option>
+                                        <option value="Accessories"> Accessories</option>
+
+                                    </select>
+                                    @error('tag')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="position-relative row form-group">
                                 <label for="price" class="col-md-3 text-md-right col-form-label">
                                     Giá <span class="text-danger">*</span>
                                 </label>
@@ -158,8 +180,9 @@
                                     Hình ảnh <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-md-9 col-xl-8">
-                                    <input type="file" class="form-control-file @error('images.*') is-invalid @enderror"
-                                        id="images" name="images[]" multiple accept="image/*" required
+                                    <input type="file"
+                                        class="form-control-file @error('images.*') is-invalid @enderror" id="images"
+                                        name="images[]" multiple accept="image/*" required
                                         onchange="previewImages(event)">
                                     <small class="form-text text-muted">Chọn nhiều ảnh (JPEG, PNG, JPG, GIF - Max
                                         2MB/ảnh)</small>

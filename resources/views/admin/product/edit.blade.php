@@ -66,6 +66,26 @@
                             </div>
 
                             <div class="position-relative row form-group">
+                                <label for="tag" class="col-md-3 text-md-right col-form-label">
+                                    Tag <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-9 col-xl-8">
+                                    <select class="form-control @error('tag') is-invalid @enderror"
+                                        id="tag" name="tag" required>
+                                        <option value="" selected disabled>-- Chọn tag --</option>
+                                        <option value="Clothing" {{ old('tag', $product->tag) == 'Clothing' ? 'selected' : '' }}>Clothing</option>
+                                        <option value="HandBag" {{ old('tag', $product->tag) == 'HandBag' ? 'selected' : '' }}>HandBag</option>
+                                        <option value="Shoes" {{ old('tag', $product->tag) == 'Shoes' ? 'selected' : '' }}>Shoes</option>
+                                        <option value="Accessories" {{ old('tag', $product->tag) == 'Accessories' ? 'selected' : '' }}>Accessories</option>
+
+                                    </select>
+                                    @error('tag')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="position-relative row form-group">
                                 <label for="price" class="col-md-3 text-md-right col-form-label">
                                     Giá <span class="text-danger">*</span>
                                 </label>
