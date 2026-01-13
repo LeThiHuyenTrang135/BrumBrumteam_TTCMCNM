@@ -42,6 +42,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
             'qty' => 'required|integer|min:0',
             'weight' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
@@ -109,6 +110,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
             'qty' => 'required|integer|min:0',
             'weight' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
@@ -122,7 +124,7 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             $data = $request->only([
-                'name', 'price', 'qty', 'weight', 'description', 
+                'name', 'price', 'qty', 'discount', 'weight', 'description', 
                 'content', 'product_category_id'
             ]);
             

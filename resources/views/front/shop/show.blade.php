@@ -199,8 +199,6 @@
                                             <form action="{{ route('shop.postComment', $product->id) }}" method="POST"
                                                 class="comment-form">
                                                 @csrf
-
-
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 

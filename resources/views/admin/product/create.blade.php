@@ -90,6 +90,23 @@
                             </div>
 
                             <div class="position-relative row form-group">
+                                <label for="discount" class="col-md-3 text-md-right col-form-label">
+                                    Giảm giá
+                                </label>
+                                <div class="col-md-9 col-xl-8">
+                                    <input type="number" step="0.01"
+                                        class="form-control @error('discount') is-invalid @enderror" id="discount"
+                                        name="discount" value="{{ old('discount') }}">
+                                    @error('discount')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    @error('price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="position-relative row form-group">
                                 <label for="qty" class="col-md-3 text-md-right col-form-label">
                                     Số lượng <span class="text-danger">*</span>
                                 </label>
