@@ -189,15 +189,15 @@
             if (data.reply) {
                 addMessage(data.reply, 'bot-message');
             } else {
-                addMessage("Có lỗi xảy ra, vui lòng thử lại.", 'bot-message');
+                addMessage("There was an error, please try again.", 'bot-message');
             }
 
         } catch (error) {
             console.error('Error:', error);
-            addMessage("Lỗi kết nối server.", 'bot-message');
+            addMessage("Server connection error.", 'bot-message');
         } finally {
             sendBtn.disabled = false;
-            sendBtn.innerText = 'Gửi';
+            sendBtn.innerText = 'Send';
         }
     }
 

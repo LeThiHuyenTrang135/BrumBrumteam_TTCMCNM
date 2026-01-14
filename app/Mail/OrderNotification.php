@@ -13,9 +13,9 @@ class OrderNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    protected $order;
-    protected $total;       
-    protected $subtotal;
+    public $order;
+    public $total;
+    public $subtotal;
 
     /**
      * Create a new message instance.
