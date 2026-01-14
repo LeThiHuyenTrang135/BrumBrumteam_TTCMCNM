@@ -10,6 +10,9 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderNotification;
+use App\Models\Product;
 
 
 class StripeController extends Controller
@@ -72,12 +75,30 @@ class StripeController extends Controller
         return redirect()->away($session->url);
     }
 
-    public function success()
+    public function success(Request $request)
     {
-        Cart::destroy();
+        // 1. Lấy Order ID từ URL
+        $orderId = $request->get('order_id');
+        $order = $this->orderService->find($orderId);
+
+        // Kiểm tra nếu đơn hàng tồn tại và chưa được xử lý (tránh F5 trừ kho 2 lần)
+        if ($order && $order->status == Constant::order_status_Pending) {
+
+            // 2. Cập nhật trạng thái -> Đã thanh toán/Đang giao (1)
+            $order->status = Constant::order_status_Paid;
+            $order->save();
+
+            $this->sendEmail($order, Cart::total(), Cart::subtotal());
+            $this->decreaseProductQty($order);
+
+            Cart::destroy();
+
+            return redirect('checkout/result')
+                ->with('notification', 'Payment Success via Stripe! Thank you for your order.');
+        }
 
         return redirect('checkout/result')
-            ->with('notification', 'Payment Success! Please wait for confirmation.');
+            ->with('notification', 'Payment processed or Invalid Order.');
     }
 
     public function cancel(Request $request)
@@ -94,5 +115,22 @@ class StripeController extends Controller
 
         return redirect('checkout/result')
             ->with('notification', 'Payment Failed! Order is canceled.');
+    }
+
+    private function decreaseProductQty($order)
+    {
+        foreach ($order->orderDetails as $detail) {
+            $product = Product::find($detail->product_id);
+            if ($product) {
+                $product->qty -= $detail->qty;
+                $product->save();
+            }
+        }
+    }
+
+    private function sendEmail($order, $total, $subtotal)
+    {
+        Mail::to($order->email)
+            ->send(new OrderNotification($order, $total, $subtotal));
     }
 }

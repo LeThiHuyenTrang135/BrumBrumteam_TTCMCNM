@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderNotification;
+use App\Models\Product;
 
 class CheckOutController extends Controller
 {
@@ -72,6 +73,7 @@ class CheckOutController extends Controller
         if ($request->payment_type === Constant::PAYMENT_PAY_LATER) {
 
             $this->sendEmail($order, Cart::total(), Cart::subtotal());
+            $this->decreaseProductQty($order);
             Cart::destroy();
 
             return redirect('checkout/result')
@@ -123,6 +125,7 @@ class CheckOutController extends Controller
             $order->save();
 
             $this->sendEmail($order, Cart::total(), Cart::subtotal());
+            $this->decreaseProductQty($order);
             Cart::destroy();
 
             return redirect('checkout/result')
@@ -138,6 +141,17 @@ class CheckOutController extends Controller
 
         return redirect('checkout/result')
             ->with('notification', 'Payment Failed! Order has been cancelled.');
+    }
+
+    private function decreaseProductQty($order)
+    {
+        foreach ($order->orderDetails as $detail) {
+            $product = Product::find($detail->product_id);
+            if ($product) {
+                $product->qty -= $detail->qty;
+                $product->save();
+            }
+        }
     }
 
     public function result()

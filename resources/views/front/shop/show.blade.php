@@ -172,7 +172,7 @@
                                             @foreach ($product->productComments as $productComment)
                                                 <div class="co-item">
                                                     <div class="avatar-pic">
-                                                        <img src="front/img/user/{{ $productComment->user->avatar ?? 'default-avatar.png' }}"
+                                                        <img src="{{ $productComment->user->avatar ?? 'front/img/user/default-avatar.png' }}"
                                                             alt="">
                                                     </div>
                                                     <div class="avatar-text">
