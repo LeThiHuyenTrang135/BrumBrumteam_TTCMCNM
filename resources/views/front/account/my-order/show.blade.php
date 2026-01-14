@@ -15,7 +15,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="{{ route('account.my-order') }}"> My Order</a>
+                        <a href="{{ route('myOrderIndex') }}"> My Order</a>
                         <span>Details</span>
                     </div>
                 </div>

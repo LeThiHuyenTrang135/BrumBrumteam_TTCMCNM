@@ -57,7 +57,7 @@ public function complete(Order $order)
     ]);
 
     return redirect()->route('admin.order.index')
-        ->with('notification', 'Đơn hàng #' . $order->id . ' đã hoàn thành ✅');
+        ->with('notification', 'Đơn hàng #' . $order->id . ' đã hoàn thành');
 }
 
 public function delivered(Order $order)
@@ -73,7 +73,7 @@ public function delivered(Order $order)
     ]);
 
     return redirect()->route('admin.order.index')
-        ->with('notification', 'Đơn hàng #' . $order->id . ' đã chuyển sang trạng thái ĐÃ GIAO ✅');
+        ->with('notification', 'Đơn hàng #' . $order->id . ' đã chuyển sang trạng thái ĐÃ GIAO');
 }
 
 
