@@ -47,7 +47,7 @@ Route::prefix('account')->group(function () {
     Route::post('resend-code', [AccountController::class, 'resendCode'])->name('resend.code');
 
     Route::prefix('my-order')->group(function () {
-        Route::get('/', [AccountController::class, 'myOrderIndex']);
+        Route::get('/', [AccountController::class, 'myOrderIndex'])->name('myOrderIndex');
         Route::get('{id}', [AccountController::class, 'myOrderShow']);
     });
     Route::get('google', [AccountController::class, 'redirectToGoogle'])->name('login.google');
